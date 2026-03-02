@@ -1,10 +1,32 @@
+# CXX = g++
+# CC = $(CXX)
+# CXXFLAGS = -std=c++17 -Wall
+#
+# all: testVecteur3D
+#
+# testVecteur3D: Vecteur3D.o testVecteur3D.o
+#
+# testVecteur3D.o: testVecteur3D.cc Vecteur3D.h
+# Vecteur3D.o: Vecteur3D.cc Vecteur3D.h 
+
+# -------- Compilateur --------
 CXX = g++
-CC = $(CXX)
-CXXFLAGS = -std=c++17 -Wall
+CXXFLAGS = -std=c++17 -Wall -Isrc   # <-- important
 
-all: testVecteur3D
+# -------- Fichiers --------
+SRC = src/Vecteur3D.cc
+TEST = tests/testVecteur3D.cc
+EXEC = testVecteur3D
 
-testVecteur3D: Vecteur3D.o testVecteur3D.o
+all: $(EXEC)
 
-testVecteur3D.o: testVecteur3D.cc Vecteur3D.h
-Vecteur3D.o: Vecteur3D.cc Vecteur3D.h 
+$(EXEC): $(SRC) $(TEST)
+	$(CXX) $(CXXFLAGS) $(SRC) $(TEST) -o $(EXEC)
+
+clean:
+	rm -f $(EXEC)
+
+run: all
+	./$(EXEC)
+
+.PHONY: all clean run
