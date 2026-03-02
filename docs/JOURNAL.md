@@ -5,9 +5,9 @@
 Vous pouvez ajouter vos propres tâches si vous le jugez utile
 (p.ex. décomposition plus fine).
 
-- [V] créer le JOURNAL						1 
-- [V] lire complètement le descriptif général			15
-- [V] s'inscrire en binôme					0 
+- [X] créer le JOURNAL						1 
+- [X] lire complètement le descriptif général			15
+- [X] s'inscrire en binôme					0 
 - [ ] fusionner les deux projets (y compris les fichiers JOURNAL)	??
 - [ ] Makefile                                               	??
 - [ ] Vecteur finis (pleinement opérationnels et testés)  	??
