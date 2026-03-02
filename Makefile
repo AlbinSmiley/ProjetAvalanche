@@ -16,7 +16,7 @@ CXXFLAGS = -std=c++17 -Wall -Isrc   # <-- important
 # -------- Fichiers --------
 SRC = src/Vecteur3D.cc
 TEST = tests/testVecteur3D.cc
-EXEC = testVecteur3D
+EXEC = build/bin/testVecteur3D
 
 all: $(EXEC)
 
