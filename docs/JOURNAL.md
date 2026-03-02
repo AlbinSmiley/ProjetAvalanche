@@ -5,27 +5,27 @@
 Vous pouvez ajouter vos propres tâches si vous le jugez utile
 (p.ex. décomposition plus fine).
 
-[V] créer le JOURNAL						1 
-[V] lire complètement le descriptif général			15
-[V] s'inscrire en binôme					0 
-[ ] fusionner les deux projets (y compris les fichiers JOURNAL)	??
-[ ] Makefile                                               	??
-[ ] Vecteur finis (pleinement opérationnels et testés)  	??
-[ ] fichier REPONSES                                         	??
-[ ] Particules simples                                         	??
-[ ] Obstacles                                           	??
-[ ] Dessinable + SupportADessin                                	??
-[ ] System                                                	??
-[ ] exerciceP9 (simulation textuelle)                         	??
-[ ] Graphisme : cadre général (reprise des exemples tuto)    	??
-[ ] Graphisme : adaptation Ã  ce projet spécifique           	??
-[ ] Particules diverses                                        	??
-[ ] Amélioration du modèle                                     	??
-[ ] Meilleurs voisinages                                     	??
-[ ] fichier CONCEPTION                                         	??
-[ ] fichier README                                        	??
-[ ] fichier NOMS                                        	??
-[ ] rendu !                                             	??
+- [V] créer le JOURNAL						1 
+- [V] lire complètement le descriptif général			15
+- [V] s'inscrire en binôme					0 
+- [ ] fusionner les deux projets (y compris les fichiers JOURNAL)	??
+- [ ] Makefile                                               	??
+- [ ] Vecteur finis (pleinement opérationnels et testés)  	??
+- [ ] fichier REPONSES                                         	??
+- [ ] Particules simples                                         	??
+- [ ] Obstacles                                           	??
+- [ ] Dessinable + SupportADessin                                	??
+- [ ] System                                                	??
+- [ ] exerciceP9 (simulation textuelle)                         	??
+- [ ] Graphisme : cadre général (reprise des exemples tuto)    	??
+- [ ] Graphisme : adaptation Ã  ce projet spécifique           	??
+- [ ] Particules diverses                                        	??
+- [ ] Amélioration du modèle                                     	??
+- [ ] Meilleurs voisinages                                     	??
+- [ ] fichier CONCEPTION                                         	??
+- [ ] fichier README                                        	??
+- [ ] fichier NOMS                                        	??
+- [ ] rendu !                                             	??
 
 ======================================================================
 # A FAIRE (PROCHAINE ETAPE)
