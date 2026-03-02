@@ -10,9 +10,9 @@ nous l'avons fait grâce à une classe vecteur3D qui stocke 3 double
 nos attributs sont : double x; double y; et double z; et ils sont privés
 
 **quelles méthodes ?** 
-- ´ set_coord(int i, double valeur) ´ permet de modifier une valeur. i = 0 modifie x, i = 1 modifie y et i = 2 modifie z
-- affiche() const affiche le vecteur sous la fomre x y z et c'est suivi d'un const car cela doit juste afficher et pas modifier le vecteur 
-- compare(const Vecteur3D& autre, const double &precision=1e-10) const verifie si deux vecteurs sont égaux. On met autre et presision en const & pour éviter une copie et garantir qu’on ne les modifie pas.
+- `set_coord(int i, double valeur)` permet de modifier une valeur. i = 0 modifie x, i = 1 modifie y et i = 2 modifie z
+- `affiche() const` affiche le vecteur sous la fomre x y z et c'est suivi d'un const car cela doit juste afficher et pas modifier le vecteur 
+- `compare(const Vecteur3D& autre, const double &precision=1e-10) const` verifie si deux vecteurs sont égaux. On met autre et presision en const & pour éviter une copie et garantir qu’on ne les modifie pas.
 
 **quels droits d'accès ?**
 
