@@ -17,4 +17,4 @@ nos attributs sont : double x; double y; et double z; et ils sont privés
 **quels droits d'accès ?**
 
 private : les attributs (x,y,z) -> encapsulation et cela évite les modifications incohérantes. de plus nous avons vu en cours que les attributs devraient toujours etre privés
-public : les méthodes afin d'utiliser et de modifier les vecteurs 
+public : les méthodes afin d'utiliser et de modifier les vecteurs. 

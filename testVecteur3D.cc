@@ -10,10 +10,11 @@ int main() {
     Vecteur3D v3;
     Vecteur3D v0;
 
+    // v1 = (1.0, 2.0, -0.1)
     v0.set_coord(0, 0.0);
     v0.set_coord(1, 0.0);
     v0.set_coord(2, 0.0);
-    // v1 = (1.0, 2.0, -0.1)
+
     v1.set_coord(0, 1.0);
     v1.set_coord(1, 2.0);
     v1.set_coord(2, -0.1);
