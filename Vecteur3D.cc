@@ -22,12 +22,6 @@ bool Vecteur3D::compare(const Vecteur3D& autre, const double& presision ) const{
     return ((abs(x-autre.x)< presision) and (abs(y-autre.y)< presision) and (abs(z-autre.z)< presision));
 }
 
-
-
-
-
-
-
 Vecteur3D Vecteur3D::addition(const Vecteur3D& autre) const {
     Vecteur3D r;
     r.set_coord(0, x + autre.x);

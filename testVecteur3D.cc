@@ -3,18 +3,16 @@
 
 using namespace std;
 
-
 int main() {
-
-
 
     Vecteur3D v1;
     Vecteur3D v2;
     Vecteur3D v3;
     Vecteur3D v0;
-v0.set_coord(0, 0.0);
-v0.set_coord(1, 0.0);
-v0.set_coord(2, 0.0);
+
+    v0.set_coord(0, 0.0);
+    v0.set_coord(1, 0.0);
+    v0.set_coord(2, 0.0);
     // v1 = (1.0, 2.0, -0.1)
     v1.set_coord(0, 1.0);
     v1.set_coord(1, 2.0);
@@ -73,13 +71,13 @@ v0.set_coord(2, 0.0);
 
     // 2) addition du vecteur nul ne fait rien
     Vecteur3D s0 = v1.addition(v0);
-   s0.affiche(); 
-   cout << endl;
+    s0.affiche(); 
+    cout << endl;
 
     // 3) soustraction
     // (1.0,2.0,-0.1) - (2.6,3.5,4.1) = (-1.6,-1.5,-4.2)
     Vecteur3D d = v1.soustraction(v2);
-    
+
 
     d.affiche(); 
     cout << endl;
@@ -116,7 +114,7 @@ v0.set_coord(2, 0.0);
     // 9) produit vectoriel
     // (1.0,2.0,-0.1) ^ (2.6,3.5,4.1) = (8.55, -4.36, -1.7)
     Vecteur3D pv = v1.prod_vect(v2);
-    
+
     pv.affiche(); cout << endl;
 
     // 10) norme2 v1 = 5.01
