@@ -1,5 +1,6 @@
 #pragma once
 
+#include <bitset>
 #include <ostream>
 
 class Vecteur3D {
@@ -40,14 +41,35 @@ public:
     // Vecteur opposé
     Vecteur3D operator-() ; 
 
-    // Normes
-    double norme2() const;
-    double norme() const;
-
     // Getters pour les méthodes et surchage externe 
     double get_x() const { return x_; }
     double get_y() const { return y_; }
     double get_z() const { return z_; }
+
+    // méthodes 
+    void set_coord(int i, double valeur);
+    void affiche() const;
+
+    // Opérations entre vecteurs
+    Vecteur3D addition(const Vecteur3D& autre) const;
+    Vecteur3D soustraction(const Vecteur3D& autre) const;
+    Vecteur3D oppose() const;
+
+    // Multiplication par scalaire
+    Vecteur3D mult(double lambda) const;
+
+    // Produit scalaire
+    double prod_scal(const Vecteur3D& autre) const;
+
+    // Produit vectoriel
+    Vecteur3D prod_vect(const Vecteur3D& autre) const;
+
+    // Normes
+    double norme2() const;
+    double norme() const;
+
+    // Vecteur unitaire
+    Vecteur3D unitaire() const;
 };
 
 // Surchage d'operateur externe
