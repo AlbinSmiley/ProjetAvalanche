@@ -4,8 +4,12 @@ CXXFLAGS = -std=c++17 -Wall -Isrc
 
 # -------- Fichiers --------
 SRC = src/Vecteur3D.cc
-TEST = tests/testVecteur3D.cc
-EXEC = build/bin/testVecteur3D
+SRC += src/Particule.cc 
+SRC += src/constantes.h
+# TEST = tests/testVecteur3D.cc
+# EXEC = build/bin/testVecteur3D
+TEST = tests/testParticule.cc
+EXEC = build/bin/testParticule
 
 all: $(EXEC)
 

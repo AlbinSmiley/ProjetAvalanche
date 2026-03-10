@@ -1,5 +1,4 @@
 #pragma once
-
 #include <ostream>
 
 class Vecteur3D {
@@ -7,12 +6,7 @@ private :
     double x_;
     double y_;
     double z_;
-
-    bool compare (const Vecteur3D&, const double& presision = PRECISION) const;
 public:
-    static constexpr double PRECISION = 1e-10; 
-
-    // 5.3.2026, définitions des constructeurs 
     // Constructeur par défaut qui renvoi le vecteur nul
     Vecteur3D() : x_(0.0), y_(0.0), z_(0.0) {}
     // Constructeur usuel qui se comporte comme on le voudrait 
@@ -26,7 +20,7 @@ public:
     bool operator!=(Vecteur3D const&) const;
     
     // modificateur 
-    Vecteur3D& operator+=(Vecteur3D const&); 
+    Vecteur3D& operator+=(Vecteur3D const&); //retour de reference d'un vecteur pour pouvoir définir + par += 
     Vecteur3D& operator-=(Vecteur3D const&); 
     Vecteur3D& operator*=(double const); 
     Vecteur3D& operator^=(Vecteur3D const&); 
@@ -38,7 +32,7 @@ public:
     Vecteur3D operator~() ; 
 
     // Vecteur opposé
-    Vecteur3D operator-() ; 
+    Vecteur3D operator-() const ; 
 
     // Normes
     double norme2() const;
@@ -50,11 +44,15 @@ public:
     double get_z() const { return z_; }
 };
 
-// Surchage d'operateur externe
+/* 
+    Surchage d'operateur externe 
+*/
+
+// Affichage de vecteur
 std::ostream& operator<<(std::ostream&, Vecteur3D const&) ; 
 
 // Addition et soustraction
-Vecteur3D operator+(Vecteur3D, Vecteur3D const&) ;
+Vecteur3D operator+(Vecteur3D, Vecteur3D const&) ; // on ne met pas de const devant le type de retour car cela ne nous semble pas très utile, nous n'allons pas faire des trucs trop "bizarre" avec les oprations ... par exemple on ne feras pas de truc du genre : (vec1+vec2) = vec3 ... 
 Vecteur3D operator-(Vecteur3D, Vecteur3D const&) ;
 
 // multiplication par un scalaire 

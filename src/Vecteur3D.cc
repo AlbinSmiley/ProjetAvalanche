@@ -1,14 +1,15 @@
-#include "Vecteur3D.h"
-
 #include <iostream> 
 #include <cmath>
+
+#include "Vecteur3D.h"
+#include "constantes.h"
 
 using namespace std;
 
 // surchage d'operateur interne
 // comparaison
 bool Vecteur3D::operator==(Vecteur3D const& autre) const {
-    double precision = Vecteur3D::PRECISION; 
+    const double &precision = cst::PRECISION; // on crée un alias pour ce bloc puisque c'est plus lisible et plus pratique ... même si bon c'est juste pour un bloc
     bool a = (abs(x_-autre.x_) < precision) ; 
     bool b = (abs(y_-autre.y_) < precision) ; 
     bool c = (abs(z_-autre.z_) < precision) ; 
@@ -29,10 +30,7 @@ Vecteur3D& Vecteur3D::operator+=(Vecteur3D const& autre) { // la fonction modifi
 } 
 
 Vecteur3D& Vecteur3D::operator-=(Vecteur3D const& autre) {
-    x_ -= autre.x_ ; 
-    y_ -= autre.y_ ; 
-    z_ -= autre.z_ ; 
-
+    (*this) += -autre; 
     return *this; 
 }
 
@@ -61,12 +59,19 @@ Vecteur3D Vecteur3D::operator~() {
     return (*this) *= (1/norme());
 }
 
-Vecteur3D Vecteur3D::operator-() {
-    return (*this) *= -1 ;
+Vecteur3D Vecteur3D::operator-() const {
+    return (*this) * -1 ;
 }
 
-std::ostream& operator<<(std::ostream& out, Vecteur3D const& vec) {
-    out << vec.get_x() << " " << vec.get_y() << " " << vec.get_z() ; 
+ostream& operator<<(ostream& out, Vecteur3D const& vec) {
+    out 
+        << "(" 
+        << vec.get_x() 
+        << "," 
+        << vec.get_y() 
+        << "," 
+        << vec.get_z() 
+        << ")" ; 
 
     return out; 
 }
@@ -92,7 +97,7 @@ Vecteur3D operator^(Vecteur3D vec1, Vecteur3D const& vec2) {
 }
 
 double Vecteur3D::norme2() const {
-    return x_ * x_ + y_ * y_ + z_ * z_;
+    return (*this)*(*this); 
 }
 
 double Vecteur3D::norme() const {
