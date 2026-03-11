@@ -53,18 +53,21 @@ public:
     double get_rayon() const { return rayon_ ; }
     double get_rho() const { return rho_ ; }
     double get_masse() const { return masse_ ; } // un getter pour la masse car la méthode est privé et comme ça la classe et plus homogène; 
+    Vecteur3D get_force() const { return force_ ; }
 
     // méthodes 
-    Vecteur3D ecartOriente(Particule const&) const& ; 
 
     double forceLJ(Particule const&) const&; 
     Vecteur3D lambda() const; 
 
-    void ajouteForce(Vecteur3D const&); 
-    void ajouteForce(); 
-    void ajouteForce(Particule const&); 
+    Vecteur3D ajouteForce(Vecteur3D const&); 
+    Vecteur3D ajouteForce(); 
+    Vecteur3D ajouteForce(Particule const&); 
 
-    void bouger(double); 
+    void bouger(double dt = cst::DT); 
 }; 
 
 std::ostream& operator<<(std::ostream&, Particule const&) ; 
+
+Vecteur3D ecartOriente(Particule const&, Particule const&); 
+double distance(Particule const&, Particule const&); 

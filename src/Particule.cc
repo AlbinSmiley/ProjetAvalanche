@@ -25,16 +25,19 @@ ostream& operator<<(ostream& out, Particule const& particule) {
     return out ; 
 } 
 
-Vecteur3D Particule::ecartOriente(Particule const& particule) const& {
-    return get_position() - particule.get_position() ; 
+Vecteur3D ecartOriente(Particule const& p1,Particule const& p2) {
+    return p2.get_position() - p1.get_position() ; 
+}
+
+double distance(Particule const& p1, Particule const& p2) {
+    return (ecartOriente(p1,p2)).norme(); 
 }
 
 double Particule::forceLJ(Particule const& particule) const& {
     double f;
 
-    Vecteur3D ecart_oriente = ecartOriente(particule) ; 
-    double distance = (ecart_oriente).norme(); 
-    double x = distance/sigma ; 
+    double dis = distance((*this),particule); 
+    double x = dis/sigma ; 
 
     if (abs(x-1) <= PRECISION) {
         f = -1.0; 
@@ -67,17 +70,22 @@ Vecteur3D Particule::lambda() const {
     return result ; 
 }
 
-void Particule::ajouteForce(Vecteur3D const& force) {
+Vecteur3D Particule::ajouteForce(Vecteur3D const& force) {
     force_ += force; 
+    return force; 
 }
-void Particule::ajouteForce() {
-    force_ += get_masse()*G - lambda(); 
+Vecteur3D Particule::ajouteForce() {
+    Vecteur3D df = get_masse()*G - lambda() ; 
+    force_ += df ; 
+    return df ; 
 }
-void Particule::ajouteForce(Particule const& particule) {
-    force_ += (forceLJ(particule))*(~(ecartOriente(particule))) ; 
+Vecteur3D Particule::ajouteForce(Particule const& particule) {
+    Vecteur3D df = (forceLJ(particule))*(~(ecartOriente((*this),particule))) ; 
+    force_ += df ; 
+    return df ; 
 }
 
-void Particule::bouger(double dt = DT) {
+void Particule::bouger(double dt) {
     vitesse_ += force_*(dt/masse_);  
     position_+= dt*vitesse_;
 
