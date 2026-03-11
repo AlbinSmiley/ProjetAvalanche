@@ -5,14 +5,14 @@
 #include "constantes.h"
 
 using namespace std;
+using namespace cst;
 
 // surchage d'operateur interne
 // comparaison
 bool Vecteur3D::operator==(Vecteur3D const& autre) const {
-    const double &precision = cst::PRECISION; // on crée un alias pour ce bloc puisque c'est plus lisible et plus pratique ... même si bon c'est juste pour un bloc
-    bool a = (abs(x_-autre.x_) < precision) ; 
-    bool b = (abs(y_-autre.y_) < precision) ; 
-    bool c = (abs(z_-autre.z_) < precision) ; 
+    bool a = (abs(x_-autre.x_) < PRECISION) ; 
+    bool b = (abs(y_-autre.y_) < PRECISION) ; 
+    bool c = (abs(z_-autre.z_) < PRECISION) ; 
     return a and b and c ; 
 }
 
@@ -39,6 +39,11 @@ Vecteur3D& Vecteur3D::operator*=(double const lambda) {
     y_ *= lambda ; 
     z_ *= lambda ; 
 
+    return *this; 
+}
+
+Vecteur3D& Vecteur3D::operator/=(double const lambda) {
+    (*this) *= (1/lambda) ; 
     return *this; 
 }
 
@@ -90,6 +95,14 @@ Vecteur3D operator*(double lambda, Vecteur3D vec) {// on copie vec car on ne le 
 
 Vecteur3D operator*(Vecteur3D vec,double lambda) {// on ajoute cette méthode pour plus de féxiblité dans la multiplication par un scalaire (vec*lambda = lambda*vec) 
     return lambda*vec ;
+}
+
+Vecteur3D operator/(double lambda, Vecteur3D vec) {
+    return vec/=lambda ;
+}
+
+Vecteur3D operator/(Vecteur3D vec,double lambda) {
+    return lambda/vec ;
 }
 
 Vecteur3D operator^(Vecteur3D vec1, Vecteur3D const& vec2) {

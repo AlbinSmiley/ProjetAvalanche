@@ -10,10 +10,11 @@ private:
     Vecteur3D vitesse_;
     double rayon_;
     double rho_; // mg/mm³
+
     /*
         Puisque la masse d'une particule n'est pas susceptible de changer on la définit comme attribut qui seras calculer par le constructeur en utilisant la méthode masse(). 
 
-        Cela permet de limiter de potentiel calcul
+        Cela permet de limiter du potentiel calcul.
     */
     double masse_; // mg 
     const double masse() const ;
@@ -21,8 +22,8 @@ private:
     // attribut suseptible de changer 
     Vecteur3D force_; 
 public: 
-    // Attribut statique publique 
-    static constexpr double epsilon = cst::EPSILON;  
+    // Attribut statique publique qu'on pose en tant qu'alias pour eviter la copie et pour ne pas avoir à specifier le namespace à chaque fois  
+    static constexpr double epsilon = cst::EPSILON; 
     static constexpr double sigma = cst::SIGMA;  
 
     // constructeur 
@@ -52,6 +53,18 @@ public:
     double get_rayon() const { return rayon_ ; }
     double get_rho() const { return rho_ ; }
     double get_masse() const { return masse_ ; } // un getter pour la masse car la méthode est privé et comme ça la classe et plus homogène; 
+
+    // méthodes 
+    Vecteur3D ecartOriente(Particule const&) const& ; 
+
+    double forceLJ(Particule const&) const&; 
+    Vecteur3D lambda() const; 
+
+    void ajouteForce(Vecteur3D const&); 
+    void ajouteForce(); 
+    void ajouteForce(Particule const&); 
+
+    void bouger(double); 
 }; 
 
 std::ostream& operator<<(std::ostream&, Particule const&) ; 

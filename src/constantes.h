@@ -23,9 +23,9 @@ inline constexpr double E  = 2.71828182845904523536028747135 ; // pas forcément
 inline const Vecteur3D G(0.0,0.0,-9.81e3) ; // mm/s²
 
 inline constexpr double RHO_PARTICULE = 1.0 ; // mg/mm³
-inline constexpr double RHO_AIR = 1.3e-3 ; // mg/mm³
+inline constexpr double RHO_MILIEU = 1.3e-3 ; // mg/mm³
 
-inline constexpr double ETA_AIR = 1.3e-2 ; // mg/mm*s
+inline constexpr double ETA_MILIEU = 1.3e-2 ; // mg/mm*s
 
 inline constexpr double SIGMA = 0.885 ; // mm
 inline constexpr double EPSILON = 25 ; // mg*mm³/s²

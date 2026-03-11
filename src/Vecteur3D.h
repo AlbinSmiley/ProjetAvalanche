@@ -23,6 +23,7 @@ public:
     Vecteur3D& operator+=(Vecteur3D const&); //retour de reference d'un vecteur pour pouvoir définir + par += 
     Vecteur3D& operator-=(Vecteur3D const&); 
     Vecteur3D& operator*=(double const); 
+    Vecteur3D& operator/=(double const); 
     Vecteur3D& operator^=(Vecteur3D const&); 
     
     // Produit scalaire 
@@ -58,6 +59,9 @@ Vecteur3D operator-(Vecteur3D, Vecteur3D const&) ;
 // multiplication par un scalaire 
 Vecteur3D operator*(double, Vecteur3D) ; 
 Vecteur3D operator*(Vecteur3D,double) ; 
+
+Vecteur3D operator/(double, Vecteur3D) ; 
+Vecteur3D operator/(Vecteur3D,double) ; 
 
 // Produit vectoriel
 Vecteur3D operator^(Vecteur3D, Vecteur3D const&); 
