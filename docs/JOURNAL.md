@@ -40,16 +40,15 @@ pour chacun. Par exemple :
 
 ## Semaine 2Â :
 
-décrire ici ce que vous avez fait en semaine 2
-
-Temps passé : xx min <<--- éditez chaque semaine le temps total passé par les deux sur le projet
+Nous avons créé la classe Vecteur 3D en introduisant déjà les différents fichiers et le makefile. 
+Temps passé : 300 min 
 
 --------------------------------------------------
 ## Semaine 3Â :
+Nous avons modifier l'architecture du projet pour une meilleur lisibilité. 
 
 
-
-Temps passé :  min
+Temps passé : 30 min
 
 --------------------------------------------------
 ## Semaine 4Â :
