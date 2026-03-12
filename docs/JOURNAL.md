@@ -53,9 +53,11 @@ Temps passé : 30 min
 --------------------------------------------------
 ## Semaine 4Â :
 
+Cette semaine nous avons améliorer la classe Vecteur3D en mettant en place des constructeurs, des méthodes et des surcharges d'opérateurs. 
 
+Nous avons également commencé a concevoir la classe Particule. 
 
-Temps passé :  min
+Temps passé : 240 min
 
 --------------------------------------------------
 ## Semaine 5Â :
