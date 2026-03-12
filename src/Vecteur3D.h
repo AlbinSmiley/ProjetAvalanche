@@ -41,12 +41,12 @@ public:
     double norme() const;
 
     // Méthode d'affichage pour éviter l'utilisation de getter
-    std::string vecToString() const& ; 
+    // std::string vecToString() const& ; 
 
-    // // Getters pour les méthodes et surchage externe 
-    // double get_x() const { return x_; }
-    // double get_y() const { return y_; }
-    // double get_z() const { return z_; }
+    // Getters pour les méthodes et surchage externe 
+    double get_x() const { return x_; }
+    double get_y() const { return y_; }
+    double get_z() const { return z_; }
 };
 
 /* 

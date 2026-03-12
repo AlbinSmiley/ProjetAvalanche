@@ -68,12 +68,12 @@ Vecteur3D Vecteur3D::operator-() const {
     return (*this) * -1 ;
 }
 
-string Vecteur3D::vecToString() const& {
-    return "(" + to_string(x_) + "," + to_string(y_) + "," + to_string(z_) + ")";
-}
+// string Vecteur3D::vecToString() const& {
+//     return "(" + to_string(x_) + "," + to_string(y_) + "," + to_string(z_) + ")";
+// }
 
 ostream& operator<<(ostream& out, Vecteur3D const& vec) {
-    out << vec.vecToString() ;  
+    out << "(" << vec.get_x() << "," << vec.get_y() << "," << vec.get_z() << ")";
     return out; 
 }
 
