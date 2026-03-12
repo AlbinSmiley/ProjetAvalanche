@@ -74,7 +74,7 @@ int main () {
     indent(6); cout << "Particule 4 : " << p4 << endl ; 
     indent(6); cout << "Particule 5 : " << p5 << endl << endl ; 
 
-    for (size_t i; i < sys.size(); i++) {
+    for (size_t i = 0; i < sys.size(); i++) {
         afficheParticuleEtat(i, sys); 
         cout << endl << endl; 
     }
