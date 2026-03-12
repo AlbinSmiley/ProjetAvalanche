@@ -47,7 +47,7 @@ public:
         rho_(autre.rho_), 
         masse_(autre.masse_) {}
 
-    // getters pour les méthodes et surcharge externe 
+    // Getters pour les méthodes et surcharge externe 
     Vecteur3D get_position() const { return position_ ; } 
     Vecteur3D get_vitesse() const { return vitesse_ ; } 
     double get_rayon() const { return rayon_ ; }
@@ -55,8 +55,7 @@ public:
     double get_masse() const { return masse_ ; } // un getter pour la masse car la méthode est privé et comme ça la classe et plus homogène; 
     Vecteur3D get_force() const { return force_ ; }
 
-    // méthodes 
-
+    // Méthodes 
     double forceLJ(Particule const&) const&; 
     Vecteur3D lambda() const; 
 

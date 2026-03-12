@@ -141,3 +141,7 @@ Exemple : ajouter `Matrice.cc` et `Matrice.h`.
 * Garder `src/` propre
 * Écrire les tests dans `tests/`
 * Documenter dans `docs/`
+
+# Question 
+1. Utiliser les getters ? 
+2. Est ce que c'est tout ce qu'on devait faire ? 

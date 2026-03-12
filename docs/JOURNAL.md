@@ -8,9 +8,9 @@ Vous pouvez ajouter vos propres tâches si vous le jugez utile
 - [X] créer le JOURNAL						1 
 - [X] lire complètement le descriptif général			15
 - [X] s'inscrire en binôme					0 
-- [ ] fusionner les deux projets (y compris les fichiers JOURNAL)	??
-- [ ] Makefile                                               	??
-- [ ] Vecteur finis (pleinement opérationnels et testés)  	??
+- [X] fusionner les deux projets (y compris les fichiers JOURNAL)	??
+- [X] Makefile                                               	??
+- [X] Vecteur finis (pleinement opérationnels et testés)  	??
 - [ ] fichier REPONSES                                         	??
 - [ ] Particules simples                                         	??
 - [ ] Obstacles                                           	??
@@ -32,6 +32,8 @@ Vous pouvez ajouter vos propres tâches si vous le jugez utile
 
 Mettez ici ce que vous pensez devoir étre la ou les 2 prochaines étapes
 pour chacun. Par exemple :
+
+1. Faire en sorte d'éviter l'utilisation de getters (voir même totallement arrêter dans utiliser). 
 
 ======================================================================
 # SUIVI
