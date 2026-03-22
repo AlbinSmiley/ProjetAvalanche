@@ -12,7 +12,7 @@ int main() {
 
   double ecart_type_vitesse = 0.5;
   double ecart_type_rayon = 0.5;
-  double debit = 2;
+  double debit = 100;
   double dt = 0.1;
 
   Source source(modele, origine, vitesseInitial, ecart_type_vitesse,

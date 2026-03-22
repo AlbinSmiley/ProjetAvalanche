@@ -4,9 +4,9 @@
 
 class Obstacle {
 protected:
-    Vecteur3D position;
+  Vecteur3D position;
 
 public:
-    Obstacle(Vecteur3D const& position);
-    Vecteur3D getPosition() const;
+  Obstacle(Vecteur3D const &position);
+  Vecteur3D getPosition() const;
 };

@@ -2,12 +2,19 @@
 #include <iostream>
 
 #include "Particule.h"
+#include "Plan.h"
 #include "Vecteur3D.h"
 #include "constantes.h"
-#include "Plan.h"
 
 using namespace std;
 using namespace cst;
+
+void Particule::setRayon(double rayon) { rayon_ = rayon; }
+void Particule::setVitesse(Vecteur3D const &vitesse) {
+  vitesse_.set_x(vitesse.get_x());
+  vitesse_.set_y(vitesse.get_y());
+  vitesse_.set_z(vitesse.get_z());
+}
 
 const double Particule::masse()
     const { // on part du principe qu'une particule est une sphère
@@ -82,49 +89,46 @@ Vecteur3D Particule::ajouteForce(Particule const &particule) {
   return df;
 }
 
+// la méthode ajouteForce
+Vecteur3D Particule::ajouteForce(Plan const &plan) {
+
+  Vecteur3D A_position = get_position();
+  Vecteur3D B_position = plan.PointPlusProche(A_position);
+  Vecteur3D e =
+      A_position - B_position; // vecteur entre le plan et la particule
+
+  double d = e.norme(); // distance entre la particule et le plan
+
+  if (d < PRECISION)
+    return Vecteur3D(0, 0, 0); // sécurité si la particule est exacteemtn sur le
+                               // plan (division par 0)
+
+  Vecteur3D u = ~e;
+
+  double x = d / SIGMA;
+  double f;
+
+  if (abs(x - 1) <= PRECISION) {
+    f = -1.0;
+  } else if (abs(2 - x) <= PRECISION) {
+    f = 0.0;
+  } else {
+    f = (pow(x, 6) - 2) / (pow(x, 13));
+  }
+
+  double F =
+      2 * (24 * EPSILON * f) / (SIGMA * SIGMA); // fois 2 car obsactle fixe
+
+  Vecteur3D df = F * u;
+
+  force_ += df;
+
+  return df;
+}
+
 void Particule::bouger(double dt) {
   vitesse_ += force_ * (dt / masse_);
   position_ += dt * vitesse_;
 
   force_ = Vecteur3D(0.0, 0.0, 0.0);
-}
-
-void Particule::setRayon(double rayon) { rayon_ = rayon; }
-void Particule::setVitesse(Vecteur3D const &vitesse) {
-  vitesse_.set_x(vitesse.get_x());
-  vitesse_.set_y(vitesse.get_y());
-  vitesse_.set_z(vitesse.get_z());
-}
-
-
-// la méthode ajouteForce 
-Vecteur3D Particule::ajouteForce(Plan const& plan) {
-
-    Vecteur3D P = plan.PointPlusProche(position_);
-    Vecteur3D e = position_ - P; //vecteur entre le plan et la particule
-
-    double d = e.norme();//distance entre la particule et le plan
-
-    if (d < PRECISION) return Vecteur3D(0,0,0); // sécurité si la particule est exacteemtn sur le plan (division par 0)
-
-    Vecteur3D u = ~e;
-
-    double x = d / SIGMA;
-    double f;
-
-    if (abs(x - 1) <= PRECISION) {
-        f = -1.0;
-    } else if (abs(2 - x) <= PRECISION) {
-        f = 0.0;
-    } else {
-        f = (pow(x, 6) - 2) / (pow(x, 13));
-    }
-
-    double F = 2 * (24 * EPSILON * f) / (SIGMA * SIGMA); // fois 2 car obsactle fixe
-
-    Vecteur3D df = F * u;
-
-    force_ += df;
-
-    return df;
 }
