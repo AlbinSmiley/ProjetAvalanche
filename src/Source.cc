@@ -33,7 +33,7 @@ void Source::creation(EnsembleParticule &ensemble, double dt) {
       copie.setRayon(generateur.gaussienne(mean_rayon, ecart_type_rayons_));
 
       copie.ajouteForce();
-      copie.ajouteForce();
+      copie.bouger(dt);
 
       ensemble.push_back(copie);
     }
