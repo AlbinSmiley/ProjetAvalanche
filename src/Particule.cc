@@ -78,18 +78,19 @@ Vecteur3D Particule::ajouteForce(Vecteur3D const &force) {
   force_ += force;
   return force;
 }
+
 Vecteur3D Particule::ajouteForce() {
   Vecteur3D df = get_masse() * G - lambda();
   force_ += df;
   return df;
 }
+
 Vecteur3D Particule::ajouteForce(Particule const &particule) {
   Vecteur3D df = (forceLJ(particule)) * (~(ecartOriente((*this), particule)));
   force_ += df;
   return df;
 }
 
-// la méthode ajouteForce
 Vecteur3D Particule::ajouteForce(Plan const &plan) {
 
   Vecteur3D A_position = get_position();
