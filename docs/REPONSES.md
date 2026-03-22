@@ -30,3 +30,7 @@ Mais alors ce constructeur ne pourrait pas coéxister avec le constructeur pour 
 La masse des particules est implémenté en tant qu'attribut. En effet la masse tout comme le rayon et la masse volumique ne sont pas susceptible de changer il parait logique que la masse soit un attribut. Qui plus est, par analogie, il est plus logique de considérer la masse comme un attribut, car "physiquement" cela fait parti des propriété intrinsec d'une particule. 
 
 ### sous question pour les méthode `ajouteForce`
+
+### Question P6.1 : Comment proposez-vous de représenter les obstacles dans votre projet ? Cela modifie-t-il la classe "Particule" ? 
+Nous avons choisi de représenter un obstacle par une classe distincte de celle des particules.
+Non ça ne change pas notre classe particule car une particule et un obstacle n'ont pas le même rôle et une particule "n'est pas" un obstacle et un obstacle "n'est pas" une particule. 

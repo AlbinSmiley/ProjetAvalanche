@@ -3,6 +3,7 @@
 
 #include "Vecteur3D.h"
 #include "constantes.h"
+#include "Plan.h"
 
 class Particule {
 private:
@@ -66,6 +67,9 @@ public:
 
   void setVitesse(Vecteur3D const &);
   void setRayon(double);
+
+  Vecteur3D ajouteForce(Plan const& plan);
+
 };
 
 std::ostream &operator<<(std::ostream &, Particule const &);

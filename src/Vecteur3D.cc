@@ -60,8 +60,8 @@ double Vecteur3D::operator*(Vecteur3D const& autre) const {// surchage interne p
     return x_*autre.x_ + y_*autre.y_ + z_*autre.z_ ; 
 }
 
-Vecteur3D Vecteur3D::operator~() {
-    return (*this) *= (1/norme());
+Vecteur3D Vecteur3D::operator~() const {
+    return (*this) /norme();
 }
 
 Vecteur3D Vecteur3D::operator-() const {
@@ -73,7 +73,7 @@ Vecteur3D Vecteur3D::operator-() const {
 // }
 
 ostream& operator<<(ostream& out, Vecteur3D const& vec) {
-    out << "(" << vec.get_x() << "," << vec.get_y() << "," << vec.get_z() << ")";
+    out << "(" << vec.get_x() << " " << vec.get_y() << " " << vec.get_z() << ")";
     return out; 
 }
 

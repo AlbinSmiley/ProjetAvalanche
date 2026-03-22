@@ -35,7 +35,7 @@ public:
   double operator*(Vecteur3D const &) const;
 
   // Vecteur unitaire
-  Vecteur3D operator~();
+  Vecteur3D operator~() const;
 
   // Vecteur opposé
   Vecteur3D operator-() const;

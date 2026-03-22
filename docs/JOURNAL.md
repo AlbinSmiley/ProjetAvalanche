@@ -62,7 +62,17 @@ Temps passé : 240 min
 --------------------------------------------------
 ## Semaine 5Â :
 
+Semaine du XX mars 2026
 
+Cette semaine, j’ai implémenté la gestion des obstacles.
+
+J’ai introduit une classe Obstacle représentant un objet géométrique fixe, défini par une position. J’ai ensuite implémenté la classe Plan (héritée de Obstacle), caractérisée par une normale unitaire, ainsi que la méthode PointPlusProche permettant de projeter un point sur le plan.
+
+J’ai ajouté une interaction entre une particule et un obstacle en implémentant la méthode ajouteForce(Plan) dans la classe Particule, basée sur un modèle de type Lennard-Jones.
+
+J’ai également créé la classe Dalle (héritée de Plan), qui représente une portion rectangulaire de plan, en ajoutant une longueur, une largeur et une direction unitaire.
+
+Difficultés rencontrées : compréhension de l’héritage, gestion des erreurs de compilation et interprétation géométrique des projections.
 
 Temps passé :  min
 
