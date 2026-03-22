@@ -74,7 +74,7 @@ J’ai également créé la classe Dalle (héritée de Plan), qui représente un
 
 Difficultés rencontrées : compréhension de l’héritage, gestion des erreurs de compilation et interprétation géométrique des projections.
 
-Temps passé :  min
+Temps passé : 280 (fab) + ... (albin) min
 
 --------------------------------------------------
 ## Semaine 6Â :
