@@ -21,8 +21,8 @@ int main() {
 
   source.creation(ensemble, dt);
 
-  for (Particule part : ensemble) {
-    cout << part << endl;
+  for (Particule *part : ensemble) {
+    cout << *part << endl;
   }
   return 0;
 }

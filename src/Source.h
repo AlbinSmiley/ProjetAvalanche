@@ -3,7 +3,7 @@
 #include "Particule.h"
 #include <vector>
 
-using EnsembleParticule = std::vector<Particule>;
+using EnsembleParticule = std::vector<Particule *>;
 
 class Source {
 private:

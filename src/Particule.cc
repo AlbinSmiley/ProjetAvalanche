@@ -15,6 +15,11 @@ void Particule::setVitesse(Vecteur3D const &vitesse) {
   vitesse_.set_y(vitesse.get_y());
   vitesse_.set_z(vitesse.get_z());
 }
+void Particule::setPosition(Vecteur3D const &position) {
+  position_.set_x(position.get_x());
+  position_.set_y(position.get_y());
+  position_.set_z(position.get_z());
+}
 
 const double Particule::masse()
     const { // on part du principe qu'une particule est une sphère

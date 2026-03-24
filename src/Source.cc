@@ -15,8 +15,9 @@ void Source::creation(EnsembleParticule &ensemble, double dt) {
       ++nombre;
     }
 
-    Particule copie(modele_);
     for (int i = 0; i < nombre; i++) {
+      Particule *copie = new Particule(modele_);
+
       double mean_x = vitesse_moyenne_initial_.get_x();
       double mean_y = vitesse_moyenne_initial_.get_y();
       double mean_z = vitesse_moyenne_initial_.get_z();
@@ -28,14 +29,15 @@ void Source::creation(EnsembleParticule &ensemble, double dt) {
           generateur.gaussienne(mean_y, ecart_type_vitesse_initial_),
           generateur.gaussienne(mean_z, ecart_type_vitesse_initial_));
 
-      copie.setVitesse(nouvelleVitesse);
+      copie->setVitesse(nouvelleVitesse);
+      copie->setRayon(generateur.gaussienne(mean_rayon, ecart_type_rayons_));
 
-      copie.setRayon(generateur.gaussienne(mean_rayon, ecart_type_rayons_));
-
-      copie.ajouteForce();
-      copie.bouger(dt);
+      copie->ajouteForce();
+      copie->bouger(dt);
 
       ensemble.push_back(copie);
     }
+  } else {
+    return;
   }
 }

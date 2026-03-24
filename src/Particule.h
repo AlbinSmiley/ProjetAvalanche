@@ -55,7 +55,8 @@ public:
     // plus homogène
   Vecteur3D get_force() const { return force_; }
 
-  void setVitesse(Vecteur3D const &); // utile à la classe Source
+  void setPosition(Vecteur3D const &); // utile à la classe Source
+  void setVitesse(Vecteur3D const &);  // utile à la classe Source
   void setRayon(double);
 
   // Méthodes
