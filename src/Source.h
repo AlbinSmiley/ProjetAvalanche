@@ -1,9 +1,10 @@
 #pragma once
 #include "Aleatoire.h"
 #include "Particule.h"
+#include <memory>
 #include <vector>
 
-using EnsembleParticule = std::vector<Particule *>;
+using EnsembleParticule = std::vector<std::unique_ptr<Particule>>;
 
 class Source {
 private:

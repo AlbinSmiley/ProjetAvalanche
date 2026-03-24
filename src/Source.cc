@@ -16,7 +16,7 @@ void Source::creation(EnsembleParticule &ensemble, double dt) {
     }
 
     for (int i = 0; i < nombre; i++) {
-      Particule *copie = new Particule(modele_);
+      auto copie = std::make_unique<Particule>(modele_);
 
       double mean_x = vitesse_moyenne_initial_.get_x();
       double mean_y = vitesse_moyenne_initial_.get_y();
@@ -35,7 +35,8 @@ void Source::creation(EnsembleParticule &ensemble, double dt) {
       copie->ajouteForce();
       copie->bouger(dt);
 
-      ensemble.push_back(copie);
+      ensemble.push_back(
+          std::move(copie)); // move car unique_ptr n'est pas copiable
     }
   } else {
     return;

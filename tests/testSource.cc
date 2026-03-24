@@ -21,7 +21,7 @@ int main() {
 
   source.creation(ensemble, dt);
 
-  for (Particule *part : ensemble) {
+  for (auto const &part : ensemble) {
     cout << *part << endl;
   }
   return 0;
