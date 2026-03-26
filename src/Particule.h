@@ -1,9 +1,10 @@
 #pragma once
 #include <ostream>
 
-#include "Plan.h"
 #include "Vecteur3D.h"
 #include "constantes.h"
+#include "Plan.h"
+#include "Obstacle.h"
 
 class Particule {
 private:
@@ -55,10 +56,6 @@ public:
     // plus homogène
   Vecteur3D get_force() const { return force_; }
 
-  void setPosition(Vecteur3D const &); // utile à la classe Source
-  void setVitesse(Vecteur3D const &);  // utile à la classe Source
-  void setRayon(double);
-
   // Méthodes
   double forceLJ(Particule const &) const &;
   Vecteur3D lambda() const;
@@ -66,9 +63,14 @@ public:
   Vecteur3D ajouteForce(Vecteur3D const &);
   Vecteur3D ajouteForce();
   Vecteur3D ajouteForce(Particule const &);
-  Vecteur3D ajouteForce(Plan const &);
 
   void bouger(double dt = cst::DT);
+
+  void setVitesse(Vecteur3D const &);
+  void setRayon(double);
+
+  Vecteur3D ajouteForce(Obstacle const& plan);
+
 };
 
 std::ostream &operator<<(std::ostream &, Particule const &);
