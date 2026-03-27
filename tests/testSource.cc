@@ -19,10 +19,17 @@ int main() {
                 ecart_type_rayon, debit);
   EnsembleParticule ensemble = {};
 
-  source.creation(ensemble, dt);
+  Aleatoire generateur;
+
+  source.creation(ensemble, dt, generateur);
 
   for (auto const &part : ensemble) {
     cout << *part << endl;
   }
+
+  for (Particule *part : ensemble) {
+    delete part;
+  }
+  ensemble.clear();
   return 0;
 }
