@@ -1,13 +1,12 @@
 #include "Source.h"
+#include "Particule.h"
 
 void Source::on() { etat_ = true; }
 void Source::off() { etat_ = false; }
 
-void Source::creation(EnsembleParticule &ensemble, double dt) {
+void Source::creation(EnsembleParticule &ensemble, double dt,
+                      Aleatoire &generateur) {
   if (etat_ == true) {
-
-    Aleatoire generateur;
-
     double frac = debit_ * dt;
     int nombre = frac;
     frac -= nombre;
@@ -16,7 +15,8 @@ void Source::creation(EnsembleParticule &ensemble, double dt) {
     }
 
     for (int i = 0; i < nombre; i++) {
-      auto copie = std::make_unique<Particule>(modele_);
+      // Particule* copie = &modele_;
+      Particule *copie = new Particule(modele_);
 
       double mean_x = vitesse_moyenne_initial_.get_x();
       double mean_y = vitesse_moyenne_initial_.get_y();
@@ -35,8 +35,7 @@ void Source::creation(EnsembleParticule &ensemble, double dt) {
       copie->ajouteForce();
       copie->bouger(dt);
 
-      ensemble.push_back(
-          std::move(copie)); // move car unique_ptr n'est pas copiable
+      ensemble.push_back(copie);
     }
   } else {
     return;

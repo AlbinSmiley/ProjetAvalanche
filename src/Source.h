@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 
-using EnsembleParticule = std::vector<std::unique_ptr<Particule>>;
+using EnsembleParticule = std::vector<Particule *>;
 
 class Source {
 private:
@@ -29,5 +29,5 @@ public:
   void on();
   void off();
 
-  void creation(EnsembleParticule &, double);
+  void creation(EnsembleParticule &, double, Aleatoire &);
 };
