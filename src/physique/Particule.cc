@@ -53,7 +53,7 @@ Vecteur3D Particule::lambda(double eta_milieu_, double rho_milieu_) const {
   double vit = (get_vitesse()).norme();
   double temp = (80 * eta_milieu_) / (3 * rho_milieu_ * get_rayon());
 
-  bool condition = (abs(vit - temp) <= PRECISION);
+  bool condition = (vit <= temp);
 
   if (condition) {
     lamb = 6 * PI * get_rayon() * eta_milieu_;
