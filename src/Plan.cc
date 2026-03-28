@@ -16,3 +16,9 @@ Vecteur3D Plan::PointPlusProche(Vecteur3D const& x_i) const {
     return x_i -coeff * normale;
 }
 
+std::ostream& operator<<(std::ostream& out, Plan const& p) {
+    out << "Plan d'origine " << p.getPosition()
+        << " et de normale " << p.getNormale();
+    return out;
+}
+

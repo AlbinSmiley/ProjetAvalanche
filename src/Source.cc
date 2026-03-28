@@ -1,6 +1,7 @@
 #include "Source.h"
 #include "Particule.h"
 
+
 void Source::on() { etat_ = true; }
 void Source::off() { etat_ = false; }
 
@@ -40,4 +41,14 @@ void Source::creation(EnsembleParticule &ensemble, double dt,
   } else {
     return;
   }
+}
+
+//getter:
+Vecteur3D Source::getPosition() const {
+    return position_;
+}
+
+std::ostream& operator<<(std::ostream& out, Source const& s) {
+    out << "Source de position " << s.getPosition();
+    return out;
 }

@@ -5,8 +5,10 @@
 #include "constantes.h"
 #include "Plan.h"
 #include "Obstacle.h"
+#include "Dessinable.h"
+#include "SupportADessin.h"
 
-class Particule {
+class Particule : public Dessinable {
 private:
   Vecteur3D position_; // distance en mm
   Vecteur3D vitesse_;
@@ -70,6 +72,10 @@ public:
   void setRayon(double);
 
   Vecteur3D ajouteForce(Obstacle const& plan);
+
+  void dessine_sur(SupportADessin& support) const override {
+    support.dessine(*this);
+  }// elle demande au support de "me" dessiner 
 
 };
 

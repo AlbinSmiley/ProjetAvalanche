@@ -34,3 +34,18 @@ La masse des particules est implémenté en tant qu'attribut. En effet la masse 
 ### Question P6.1 : Comment proposez-vous de représenter les obstacles dans votre projet ? Cela modifie-t-il la classe "Particule" ? 
 Nous avons choisi de représenter un obstacle par une classe distincte de celle des particules.
 Non ça ne change pas notre classe particule car une particule et un obstacle n'ont pas le même rôle et une particule "n'est pas" un obstacle et un obstacle "n'est pas" une particule. 
+
+### Question P8.1 : En terme de POO, quelle est donc la nature de la méthode dessine_sur() ?
+nous avons décidé que la méthode dessine_sur() est une méthode virtuelle pure. Cela permet le polymorphisme et aussi que chaque objet dessinable puisse définir sa propre manière de s'afficher car on n'arrive pas à définir un manière générale. 
+
+### Question P8.2 : A quoi faut-il faire attention pour les classes contenant des pointeurs ? quelle(s) solution(s) est/sont envisageable(s)?
+il faut faire attention à la propriété des objets pointés, aux copies, à la destruction et aux risques de fuite de mémoire ou de double destruction. 
+Si une classe contient des pointeurs, il faut se demander si le destructeur, le constructeur de copie et l’opérateur d’affectation doivent être redéfinis.
+Une solution est d'interdire la copie, une autre à faire une copie profonde, et une autre encore à ne pas posséder les objets pointés mais seulement les référencer. Dans notre projet nous avons choisi de stocker des pointeurs sur les obstacles et les sources sans faire la copie profonde.( c’est-à-dire que nous manipulons leurs adresses sans créer de copies des objets)
+
+### Question P8.3 : Comment représentez-vous la classe système ? 
+La classe Systeme représente l’ensemble du système simulé. Elle contient un vecteur de particules, ainsi que des vecteurs de pointeurs vers des obstacles et des sources.
+
+Les particules sont stockées directement mais ce choix va surement changer étant donner qu'en semaine 10 il y aura plusieurs types de particules.Les obstacles et sources sont stockés par pointeurs afin de permettre le polymorphisme.
+
+La classe fournit des méthodes pour ajouter des éléments, des accesseurs, une méthode dessine_sur(...) pour l’affichage polymorphe et un opérateur << pour l’affichage textuel du système.

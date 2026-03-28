@@ -6,10 +6,17 @@ CXXFLAGS = -std=c++17 -Wall -Isrc
 SRC = src/Vecteur3D.cc
 SRC += src/Particule.cc 
 SRC += src/Aleatoire.cc  
-# SRC += src/Plan.cc
+SRC += src/Plan.cc
 SRC += src/Source.cc  
-# SRC += src/Obstacle.cc
-# SRC += src/Dalle.cc
+SRC += src/Obstacle.cc
+SRC += src/Dalle.cc
+SRC += src/Systeme.cc
+SRC += src/TextViewer.cc
+
+# -------- Test --------
+
+TEST = tests/testSysteme.cc
+EXEC = build/bin/testSysteme
 # TEST = tests/testVecteur3D.cc
 # EXEC = build/bin/testVecteur3D
 # TEST = tests/testParticule.cc
@@ -18,8 +25,8 @@ SRC += src/Source.cc
 # EXEC = build/bin/testAleatoire
 # TEST = tests/testObstacle.cc
 # EXEC = build/bin/testObstacle
-TEST = tests/testSource.cc
-EXEC = build/bin/Source
+#TEST = tests/testSource.cc
+#EXEC = build/bin/Source
 
 all: $(EXEC)
 

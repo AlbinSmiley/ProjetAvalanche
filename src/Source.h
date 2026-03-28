@@ -3,10 +3,16 @@
 #include "Particule.h"
 #include <memory>
 #include <vector>
+#include "Dessinable.h"
+#include "SupportADessin.h"
+
+class Particule;
+class Aleatoire;
+
 
 using EnsembleParticule = std::vector<Particule *>;
 
-class Source {
+class Source : public Dessinable {
 private:
   Particule const &modele_;
   Vecteur3D position_;
@@ -30,4 +36,12 @@ public:
   void off();
 
   void creation(EnsembleParticule &, double, Aleatoire &);
+
+  void dessine_sur(SupportADessin& support) const override
+    { support.dessine(*this); }
+
+    //getter:
+    Vecteur3D getPosition() const;
 };
+
+std::ostream& operator<<(std::ostream&, Source const&);

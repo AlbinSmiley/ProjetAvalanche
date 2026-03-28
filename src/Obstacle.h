@@ -1,15 +1,28 @@
 #pragma once
 
 #include "Vecteur3D.h"
+#include "Dessinable.h"
+#include "SupportADessin.h"
 
-class Obstacle {
+class Obstacle : public Dessinable{
 protected:
     Vecteur3D position;
 
 public:
-    Obstacle(Vecteur3D const& position);
+    Obstacle(Vecteur3D const& position); // constructeur 
+    virtual ~Obstacle() = default; //destructeur qui doit etre virtual car Obstacle est une classe polymorphe
+
     Vecteur3D getPosition() const;
+
     virtual Vecteur3D PointPlusProche(Vecteur3D const& x_i) const = 0; //car chauqe forme géométrique a une facon différente de claucler le point le plus proche 
-    //je laisse le constructeur par défaut
+    
+
+    void dessine_sur(SupportADessin& support) const override {
+    support.dessine(*this);
+
+
+  }// elle demande au support de "me" dessiner 
 
 };
+
+std::ostream& operator<<(std::ostream&, Obstacle const&);

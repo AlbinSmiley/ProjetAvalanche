@@ -8,6 +8,7 @@ Dalle::Dalle(Vecteur3D const& position,Vecteur3D const& normale, double largeur,
       directionLongueur(~directionLongueur)
 {}
 
+
 double Dalle::getLargeur() const {
     return largeur;
 }
@@ -22,4 +23,12 @@ Vecteur3D Dalle::getDirectionLongueur() const {
 
 Vecteur3D Dalle::getDirectionLargeur() const {
     return normale ^ directionLongueur;
+}
+
+std::ostream& operator<<(std::ostream& out, Dalle const& d) {
+    out << "Dalle de position " << d.getPosition()
+        << ", normale " << d.getNormale()
+        << ", largeur " << d.getLargeur()
+        << ", longueur " << d.getLongueur();
+    return out;
 }

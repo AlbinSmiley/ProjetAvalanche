@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Obstacle.h"
+#include "SupportADessin.h"
 
 class Plan : public Obstacle {
     protected: 
@@ -12,4 +13,9 @@ class Plan : public Obstacle {
         Vecteur3D getNormale() const;
 
         Vecteur3D PointPlusProche(Vecteur3D const& x_i) const override; // je redéfinis une méthode virtuelle de la classe mèreméthode 
+    
+        void dessine_sur(SupportADessin& support) const override
+        { support.dessine(*this); }
     };
+
+    std::ostream& operator<<(std::ostream&, Plan const&);
