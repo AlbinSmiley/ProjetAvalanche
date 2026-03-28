@@ -48,4 +48,4 @@ La classe Systeme représente l’ensemble du système simulé. Elle contient un
 
 Les particules sont stockées directement mais ce choix va surement changer étant donner qu'en semaine 10 il y aura plusieurs types de particules.Les obstacles et sources sont stockés par pointeurs afin de permettre le polymorphisme.
 
-La classe fournit des méthodes pour ajouter des éléments, des accesseurs, une méthode dessine_sur(...) pour l’affichage polymorphe et un opérateur << pour l’affichage textuel du système.
+La classe fournit des méthodes pour ajouter des éléments, des accesseurs, une méthode dessine_sur() pour l’affichage polymorphe et un opérateur << pour l’affichage textuel du système.
