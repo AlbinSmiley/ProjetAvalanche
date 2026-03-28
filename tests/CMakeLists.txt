@@ -1,0 +1,11 @@
+function(add_test_exec name)
+  add_executable(${name} ${name}.cc)
+  target_link_libraries(${name} PRIVATE avalanche)
+endfunction()
+
+add_test_exec(testVecteur3D)
+add_test_exec(testParticule)
+add_test_exec(testAleatoire)
+add_test_exec(testObstacle)
+add_test_exec(testSource)
+add_test_exec(testSysteme)
