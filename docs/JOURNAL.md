@@ -82,7 +82,7 @@ Semaine 6
 
 -Mise en place de l’architecture d’affichage avec les classes Dessinable et SupportADessin pour séparer la simulation de la visualisation.
 -Implémentation de la classe TextViewer permettant un affichage texte des objets du système.
--Modification des classes Particule, Obstacle, Plan, Dalle et Source pour les rendre dessinables via la méthode dessine_sur(...).
+-Modification des classes Particule, Obstacle, Plan, Dalle et Source pour les rendre dessinables via la méthode dessine_sur().
 -Création de la classe Systeme contenant les particules, obstacles et sources. Ajout des méthodes d’ajout, des accesseurs et de l’opérateur << pour afficher le système complet.
 
 
