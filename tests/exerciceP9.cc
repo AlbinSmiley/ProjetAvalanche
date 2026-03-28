@@ -1,7 +1,7 @@
 #include <cmath>
-#include <iostream>
 
 #include "Systeme.h"
+#include "constantes.h"
 
 using namespace std;
 
@@ -19,8 +19,11 @@ int main() {
                     Vecteur3D(0, 0, 0), 0.4));
 
   systeme.ajouteObstacle(new Plan(Vecteur3D(0, 0, -0.9), Vecteur3D(0, 0, 1)));
+  // systeme.set_dt(0.001);
+  // systeme.set_eta(1.8e-3);
+  // systeme.set_rho(1.3e-3);
 
-  systeme.evolution(0.03, cout);
+  systeme.evolution(0.1, cout);
 
   return 0;
 }

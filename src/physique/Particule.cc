@@ -30,21 +30,24 @@ double distance(Particule const &p1, Particule const &p2) {
   return (ecartOriente(p1, p2)).norme();
 }
 
-double Particule::forceLJ(Particule const &particule) const & {
+double facteurLJ(double dis) {
   double f;
+  double x = dis / SIGMA;
 
-  double dis = distance((*this), particule);
-  double x = dis / sigma;
-
-  if (abs(x - 1) <= PRECISION) {
+  if (x <= 1.0) {
     f = -1.0;
-  } else if (abs(2 - x) <= PRECISION) {
+  } else if (x >= 2) {
     f = 0.0;
   } else {
     f = (pow(x, 6) - 2) / (pow(x, 13));
   }
 
-  return (24 * epsilon * f) / (sigma * sigma);
+  return (24 * EPSILON * f) / (SIGMA * SIGMA);
+}
+
+double Particule::forceLJ(Particule const &particule) const & {
+  double dis = distance((*this), particule);
+  return facteurLJ(dis);
 }
 
 Vecteur3D Particule::lambda(double eta_milieu_, double rho_milieu_) const {
@@ -110,19 +113,7 @@ Vecteur3D Particule::ajouteForce(Obstacle const &plan) {
 
   Vecteur3D u = ~e;
 
-  double x = d / SIGMA;
-  double f;
-
-  if (abs(x - 1) <= PRECISION) {
-    f = -1.0;
-  } else if (abs(2 - x) <= PRECISION) {
-    f = 0.0;
-  } else {
-    f = (pow(x, 6) - 2) / (pow(x, 13));
-  }
-
-  double F =
-      2 * (24 * EPSILON * f) / (SIGMA * SIGMA); // fois 2 car obsactle fixe
+  double F = 2 * facteurLJ(d);
 
   Vecteur3D df = F * u;
 

@@ -63,6 +63,7 @@ public:
   // une méthode qui fait évoluer le système pendant un temps
   // donné en affichant le sysètme à chaques pas de temps
   void evolution(double, std::ostream &out);
+  void dataEvolution(double);
 };
 
 // affichage texte

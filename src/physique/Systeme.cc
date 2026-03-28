@@ -1,5 +1,6 @@
 #include "Systeme.h"
 #include "TextViewer.h"
+#include <fstream>
 
 using namespace std;
 
@@ -52,6 +53,7 @@ ostream &operator<<(ostream &out, Systeme const &s) {
 
 void Systeme::evolue() {
   for (size_t i = 0; i < particules.size(); i++) {
+    // force perso
     particules[i]->ajouteForce(eta_milieu, rho_milieu);
 
     // on ajoute a la particule i la force qu'exerce l'obstactle j
@@ -83,6 +85,25 @@ void Systeme::evolution(double t_final, ostream &out) {
         << " -----------------------------" << endl;
     for (size_t i = 0; i < particules.size(); i++) {
       out << i + 1 << " : " << *particules[i] << endl;
+    }
+    evolue();
+    t += dt;
+  } while (t < t_final);
+}
+
+void Systeme::dataEvolution(double t_final) {
+  vector<ofstream> fichiers;
+  for (size_t i = 0; i < particules.size(); ++i) {
+    fichiers.emplace_back("particule_" + to_string(i) + ".txt");
+    // fichiers[i] << "t x y z\n";
+  }
+
+  double t = 0;
+  do {
+    for (size_t i = 0; i < particules.size(); ++i) {
+      Vecteur3D pos = particules[i]->get_position();
+      fichiers[i] << t << " " << pos.get_x() << " " << pos.get_y() << " "
+                  << pos.get_z() << "\n";
     }
     evolue();
     t += dt;
