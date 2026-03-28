@@ -10,17 +10,21 @@ int main() {
   Vecteur3D origine(0, 0, 0);
   Vecteur3D vitesseInitial(1, 2, 3);
 
+  // initialisation des paramètres (pour générer 5 particules par unité de
+  // temps)
   double ecart_type_vitesse = 0.5;
   double ecart_type_rayon = 0.5;
-  double debit = 100;
+  double debit = 50;
   double dt = 0.1;
 
+  // Appel au constructeur de Source
   Source source(modele, origine, vitesseInitial, ecart_type_vitesse,
                 ecart_type_rayon, debit);
   EnsembleParticule ensemble = {};
 
   Aleatoire generateur;
 
+  // Creation de particules
   source.creation(ensemble, dt, generateur);
 
   for (auto const &part : ensemble) {
