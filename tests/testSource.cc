@@ -25,7 +25,7 @@ int main() {
   Aleatoire generateur;
 
   // Creation de particules
-  source.creation(ensemble, dt, generateur);
+  source.creation(ensemble, generateur, dt);
 
   for (auto const &part : ensemble) {
     cout << *part << endl;

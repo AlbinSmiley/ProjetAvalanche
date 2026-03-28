@@ -1,12 +1,12 @@
 #pragma once
 #include <ostream>
 
+#include "Dessinable.h"
+#include "Obstacle.h"
+#include "Plan.h"
+#include "SupportADessin.h"
 #include "Vecteur3D.h"
 #include "constantes.h"
-#include "Plan.h"
-#include "Obstacle.h"
-#include "Dessinable.h"
-#include "SupportADessin.h"
 
 class Particule : public Dessinable {
 private:
@@ -60,10 +60,11 @@ public:
 
   // Méthodes
   double forceLJ(Particule const &) const &;
-  Vecteur3D lambda() const;
+  Vecteur3D lambda(double, double) const;
 
   Vecteur3D ajouteForce(Vecteur3D const &);
-  Vecteur3D ajouteForce();
+  Vecteur3D ajouteForce(double eta_milieu = cst::ETA_AIR,
+                        double rho_milieu = cst::RHO_AIR);
   Vecteur3D ajouteForce(Particule const &);
 
   void bouger(double dt = cst::DT);
@@ -71,12 +72,11 @@ public:
   void setVitesse(Vecteur3D const &);
   void setRayon(double);
 
-  Vecteur3D ajouteForce(Obstacle const& plan);
+  Vecteur3D ajouteForce(Obstacle const &plan);
 
-  void dessine_sur(SupportADessin& support) const override {
+  void dessine_sur(SupportADessin &support) const override {
     support.dessine(*this);
-  }// elle demande au support de "me" dessiner 
-
+  }
 };
 
 std::ostream &operator<<(std::ostream &, Particule const &);

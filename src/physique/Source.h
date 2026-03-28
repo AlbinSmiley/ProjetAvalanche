@@ -1,14 +1,13 @@
 #pragma once
 #include "Aleatoire.h"
-#include "Particule.h"
-#include <memory>
-#include <vector>
 #include "Dessinable.h"
+#include "Particule.h"
 #include "SupportADessin.h"
+#include "constantes.h"
+#include <vector>
 
 class Particule;
 class Aleatoire;
-
 
 using EnsembleParticule = std::vector<Particule *>;
 
@@ -35,13 +34,16 @@ public:
   void on();
   void off();
 
-  void creation(EnsembleParticule &, double, Aleatoire &);
+  void creation(EnsembleParticule &, Aleatoire &, double dt = cst::DT,
+                double eta_milieu = cst::ETA_AIR,
+                double rho_milieu = cst::RHO_AIR);
 
-  void dessine_sur(SupportADessin& support) const override
-    { support.dessine(*this); }
+  void dessine_sur(SupportADessin &support) const override {
+    support.dessine(*this);
+  }
 
-    //getter:
-    Vecteur3D getPosition() const;
+  // getter:
+  Vecteur3D getPosition() const;
 };
 
-std::ostream& operator<<(std::ostream&, Source const&);
+std::ostream &operator<<(std::ostream &, Source const &);

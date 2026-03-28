@@ -1,12 +1,11 @@
 #include "Source.h"
 #include "Particule.h"
 
-
 void Source::on() { etat_ = true; }
 void Source::off() { etat_ = false; }
 
-void Source::creation(EnsembleParticule &ensemble, double dt,
-                      Aleatoire &generateur) {
+void Source::creation(EnsembleParticule &ensemble, Aleatoire &generateur,
+                      double dt, double eta_milieu, double rho_milieu) {
   if (etat_ == true) {
     double frac = debit_ * dt;
     int nombre = frac;
@@ -33,7 +32,7 @@ void Source::creation(EnsembleParticule &ensemble, double dt,
       copie->setVitesse(nouvelleVitesse);
       copie->setRayon(generateur.gaussienne(mean_rayon, ecart_type_rayons_));
 
-      copie->ajouteForce();
+      copie->ajouteForce(eta_milieu, rho_milieu);
       copie->bouger(dt);
 
       ensemble.push_back(copie);
@@ -43,12 +42,10 @@ void Source::creation(EnsembleParticule &ensemble, double dt,
   }
 }
 
-//getter:
-Vecteur3D Source::getPosition() const {
-    return position_;
-}
+// getter:
+Vecteur3D Source::getPosition() const { return position_; }
 
-std::ostream& operator<<(std::ostream& out, Source const& s) {
-    out << "Source de position " << s.getPosition();
-    return out;
+std::ostream &operator<<(std::ostream &out, Source const &s) {
+  out << "Source de position " << s.getPosition();
+  return out;
 }

@@ -20,7 +20,6 @@ int main() {
 
   systeme.ajouteObstacle(new Plan(Vecteur3D(0, 0, -0.9), Vecteur3D(0, 0, 1)));
 
-  cout << "./testSystem" << endl;
   cout << systeme << endl;
   return 0;
 }

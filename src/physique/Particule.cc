@@ -2,9 +2,9 @@
 #include <iostream>
 
 #include "Particule.h"
+#include "Plan.h"
 #include "Vecteur3D.h"
 #include "constantes.h"
-#include "Plan.h"
 
 using namespace std;
 using namespace cst;
@@ -47,18 +47,18 @@ double Particule::forceLJ(Particule const &particule) const & {
   return (24 * epsilon * f) / (sigma * sigma);
 }
 
-Vecteur3D Particule::lambda() const {
+Vecteur3D Particule::lambda(double eta_milieu_, double rho_milieu_) const {
   double lamb;
 
   double vit = (get_vitesse()).norme();
-  double temp = (80 * ETA_MILIEU) / (3 * RHO_MILIEU * get_rayon());
+  double temp = (80 * eta_milieu_) / (3 * rho_milieu_ * get_rayon());
 
   bool condition = (abs(vit - temp) <= PRECISION);
 
   if (condition) {
-    lamb = 6 * PI * get_rayon() * ETA_MILIEU;
+    lamb = 6 * PI * get_rayon() * eta_milieu_;
   } else {
-    lamb = (9 * PI * get_rayon() * get_rayon() * RHO_MILIEU * vit) / 40;
+    lamb = (9 * PI * get_rayon() * get_rayon() * rho_milieu_ * vit) / 40;
   }
 
   Vecteur3D result = get_vitesse();
@@ -71,8 +71,8 @@ Vecteur3D Particule::ajouteForce(Vecteur3D const &force) {
   force_ += force;
   return force;
 }
-Vecteur3D Particule::ajouteForce() {
-  Vecteur3D df = get_masse() * G - lambda();
+Vecteur3D Particule::ajouteForce(double eta_milieu, double rho_milieu) {
+  Vecteur3D df = get_masse() * G - lambda(eta_milieu, rho_milieu);
   force_ += df;
   return df;
 }
@@ -96,35 +96,37 @@ void Particule::setVitesse(Vecteur3D const &vitesse) {
   vitesse_.set_z(vitesse.get_z());
 }
 
+// la méthode ajouteForce
+Vecteur3D Particule::ajouteForce(Obstacle const &plan) {
 
-// la méthode ajouteForce 
-Vecteur3D Particule::ajouteForce(Obstacle const& plan) {
+  Vecteur3D P = plan.PointPlusProche(position_);
+  Vecteur3D e = position_ - P; // vecteur entre le plan et la particule
 
-    Vecteur3D P = plan.PointPlusProche(position_);
-    Vecteur3D e = position_ - P; //vecteur entre le plan et la particule
+  double d = e.norme(); // distance entre la particule et le plan
 
-    double d = e.norme();//distance entre la particule et le plan
+  if (d < PRECISION)
+    return Vecteur3D(0, 0, 0); // sécurité si la particule est exacteemtn sur le
+                               // plan (division par 0)
 
-    if (d < PRECISION) return Vecteur3D(0,0,0); // sécurité si la particule est exacteemtn sur le plan (division par 0)
+  Vecteur3D u = ~e;
 
-    Vecteur3D u = ~e;
+  double x = d / SIGMA;
+  double f;
 
-    double x = d / SIGMA;
-    double f;
+  if (abs(x - 1) <= PRECISION) {
+    f = -1.0;
+  } else if (abs(2 - x) <= PRECISION) {
+    f = 0.0;
+  } else {
+    f = (pow(x, 6) - 2) / (pow(x, 13));
+  }
 
-    if (abs(x - 1) <= PRECISION) {
-        f = -1.0;
-    } else if (abs(2 - x) <= PRECISION) {
-        f = 0.0;
-    } else {
-        f = (pow(x, 6) - 2) / (pow(x, 13));
-    }
+  double F =
+      2 * (24 * EPSILON * f) / (SIGMA * SIGMA); // fois 2 car obsactle fixe
 
-    double F = 2 * (24 * EPSILON * f) / (SIGMA * SIGMA); // fois 2 car obsactle fixe
+  Vecteur3D df = F * u;
 
-    Vecteur3D df = F * u;
+  force_ += df;
 
-    force_ += df;
-
-    return df;
+  return df;
 }
