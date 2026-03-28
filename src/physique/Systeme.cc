@@ -73,3 +73,18 @@ void Systeme::evolue() {
     particule->bouger(dt);
   }
 }
+
+void Systeme::evolution(double t_final, ostream &out) {
+  double t = 0;
+  out << "Condition initiale du système : " << endl;
+  out << (*this) << endl;
+  do {
+    out << "----------------------------- t = " << t
+        << " -----------------------------" << endl;
+    for (size_t i = 0; i < particules.size(); i++) {
+      out << i + 1 << " : " << *particules[i] << endl;
+    }
+    evolue();
+    t += dt;
+  } while (t < t_final);
+}
