@@ -1,8 +1,13 @@
 #include "Systeme.h"
+#include "Particule.h"
 #include "TextViewer.h"
+#include "Vecteur3D.h"
+#include "constantes.h"
+#include <execution>
 #include <fstream>
 
 using namespace std;
+using namespace cst;
 
 // accesseurs
 vector<Particule *> const &Systeme::getParticules() const { return particules; }
@@ -88,13 +93,13 @@ void Systeme::evolution(double t_final, ostream &out) {
     }
     evolue();
     t += dt;
-  } while (t < t_final);
+  } while (t <= t_final);
 }
 
 void Systeme::dataEvolution(double t_final) {
   vector<ofstream> fichiers;
   for (size_t i = 0; i < particules.size(); ++i) {
-    fichiers.emplace_back("particule_" + to_string(i) + ".txt");
+    fichiers.emplace_back("./data/particule_" + to_string(i) + ".txt");
     // fichiers[i] << "t x y z\n";
   }
 
@@ -107,5 +112,100 @@ void Systeme::dataEvolution(double t_final) {
     }
     evolue();
     t += dt;
-  } while (t < t_final);
+  } while (t <= t_final);
+}
+
+void affichageForcePerso(Particule *part, double eta, double rho,
+                         ostream &out) {
+  out << "\t\tf= "
+      << part->get_force()
+      // << "---(l=" << (part->lambda(eta, rho)).norme()
+      << "---(l=" << part->lambda(eta, rho) << ")--> f= " << part->ajouteForce()
+      << endl;
+}
+
+void affichageForceLJ(double dist, ostream &out) {
+  out << "\t\tforceLJ: 24 * " << EPSILON << " / " << SIGMA << "^2 * f(" << dist
+      << " / " << SIGMA << ")" << endl;
+  out << "\t\t\t = " << 24 * EPSILON / (SIGMA * SIGMA) << " * "
+      << facteur_f(dist / SIGMA) << endl;
+  out << "\t\t\t = " << 24 * EPSILON / (SIGMA * SIGMA) * facteur_f(dist / SIGMA)
+      << endl;
+}
+
+void affichageForceObstacle(Particule *part, Obstacle *obst, ostream &out) {
+  Vecteur3D ppp = obst->PointPlusProche(part->get_position());
+  double dist = (ppp - (part->get_position())).norme();
+  out << "\t\tpoint plus proche = " << ppp << ", distance = " << dist << endl;
+  affichageForceLJ(dist, out);
+  out << "\t\tf= " << part->ajouteForce(*obst) << ", f=" << part->get_force()
+      << endl;
+}
+
+void affichageForceParticule(Particule *main_part, Particule *sec_part,
+                             ostream &out) {
+  double dist = distance(*main_part, *sec_part);
+  out << "\t\tdistance entre particules = " << dist << endl;
+  affichageForceLJ(dist, out);
+  out << "\t\tdf= " << main_part->ajouteForce(*sec_part)
+      << ", f= " << main_part->get_force() << endl;
+}
+
+void affichageBouger(Particule *main_part, double dt, ostream &out) {
+  Vecteur3D x1 = main_part->get_position();
+  Vecteur3D v1 = main_part->get_vitesse();
+  main_part->bouger(dt);
+  Vecteur3D x2 = main_part->get_position();
+  Vecteur3D v2 = main_part->get_vitesse();
+
+  out << "\tf = " << main_part->get_force() << endl;
+  out << "\tdv= " << v2 - v1 << endl;
+  out << "\tdx= " << x2 - x1 << endl;
+  out << "\tx = " << x2 << endl;
+  out << "\tv = " << v2 << endl;
+}
+
+void Systeme::affichageEvolution(double t_final, ostream &out) {
+  double t = 0;
+
+  do {
+    out << "\n============================================================\n";
+    out << "                      Temps : " << t << "\n";
+    out << "============================================================\n\n";
+
+    out << (*this) << "\n";
+
+    out << "\n---------------------- evolue() -----------------------------\n";
+
+    for (size_t i = 0; i < particules.size(); i++) {
+      out << "\n[Particule " << i + 1 << "]\n";
+
+      out << "(a) Force \"perso\" :\n";
+      affichageForcePerso(particules[i], eta_milieu, rho_milieu, out);
+
+      out << "(b) Forces des obstacles :\n";
+      for (size_t j = 0; j < obstacles.size(); j++) {
+        out << "\t\t- Obstacle " << j + 1 << "\n";
+        affichageForceObstacle(particules[i], obstacles[j], out);
+      }
+
+      out << "(c) Forces des autres particules :\n";
+      for (size_t j = 0; j < particules.size(); j++) {
+        if (j != i) {
+          out << "\t\t------ Particule " << j + 1 << "------" << "\n";
+          affichageForceParticule(particules[i], particules[j], out);
+        }
+      }
+    }
+
+    out << "\n---------------------- bouger() -----------------------------\n";
+
+    for (size_t i = 0; i < particules.size(); i++) {
+      out << "\n[Particule " << i + 1 << "]" << endl;
+      affichageBouger(particules[i], dt, out);
+      out << "\t------" << endl;
+    }
+    t += dt;
+
+  } while (t <= t_final);
 }

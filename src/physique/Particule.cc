@@ -30,10 +30,8 @@ double distance(Particule const &p1, Particule const &p2) {
   return (ecartOriente(p1, p2)).norme();
 }
 
-double facteurLJ(double dis) {
+double facteur_f(double x) {
   double f;
-  double x = dis / SIGMA;
-
   if (x <= 1.0) {
     f = -1.0;
   } else if (x >= 2) {
@@ -41,8 +39,12 @@ double facteurLJ(double dis) {
   } else {
     f = (pow(x, 6) - 2) / (pow(x, 13));
   }
+  return f;
+}
 
-  return (24 * EPSILON * f) / (SIGMA * SIGMA);
+double facteurLJ(double dis) {
+  double x = dis / SIGMA;
+  return 24 * EPSILON * facteur_f(x) / (SIGMA * SIGMA);
 }
 
 double Particule::forceLJ(Particule const &particule) const & {
@@ -74,8 +76,8 @@ Vecteur3D Particule::ajouteForce(Vecteur3D const &force) {
   force_ += force;
   return force;
 }
-Vecteur3D Particule::ajouteForce(double eta_milieu, double rho_milieu) {
-  Vecteur3D df = get_masse() * G - lambda(eta_milieu, rho_milieu);
+Vecteur3D Particule::ajouteForce(double eta_milieu_, double rho_milieu_) {
+  Vecteur3D df = get_masse() * G - lambda(eta_milieu_, rho_milieu_);
   force_ += df;
   return df;
 }
@@ -103,7 +105,7 @@ void Particule::setVitesse(Vecteur3D const &vitesse) {
 Vecteur3D Particule::ajouteForce(Obstacle const &plan) {
 
   Vecteur3D P = plan.PointPlusProche(position_);
-  Vecteur3D e = position_ - P; // vecteur entre le plan et la particule
+  Vecteur3D e = P - position_; // vecteur entre le plan et la particule
 
   double d = e.norme(); // distance entre la particule et le plan
 

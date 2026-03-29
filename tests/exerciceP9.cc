@@ -1,7 +1,9 @@
 #include <cmath>
 
+#include "Particule.h"
 #include "Systeme.h"
 #include "constantes.h"
+#include <fstream>
 
 using namespace std;
 
@@ -23,7 +25,7 @@ int main() {
   // systeme.set_eta(1.8e-3);
   // systeme.set_rho(1.3e-3);
 
-  systeme.evolution(0.1, cout);
+  systeme.dataEvolution(0.1);
 
   return 0;
 }

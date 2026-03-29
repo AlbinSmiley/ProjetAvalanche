@@ -83,3 +83,6 @@ std::ostream &operator<<(std::ostream &, Particule const &);
 
 Vecteur3D ecartOriente(Particule const &, Particule const &);
 double distance(Particule const &, Particule const &);
+
+double facteur_f(double);
+double facteurLJ(double);

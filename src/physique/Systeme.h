@@ -64,6 +64,7 @@ public:
   // donné en affichant le sysètme à chaques pas de temps
   void evolution(double, std::ostream &out);
   void dataEvolution(double);
+  void affichageEvolution(double, std::ostream &out);
 };
 
 // affichage texte
