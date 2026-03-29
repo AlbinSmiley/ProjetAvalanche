@@ -25,7 +25,9 @@ int main() {
   // systeme.set_eta(1.8e-3);
   // systeme.set_rho(1.3e-3);
 
-  systeme.dataEvolution(0.1);
+  // systeme.dataEvolution(0.1); // pour mettres les données dans un nouveau
+  // dossier data
+  systeme.affichageEvolution(0.1, cout); // pour un affichage détaillé
 
   return 0;
 }
