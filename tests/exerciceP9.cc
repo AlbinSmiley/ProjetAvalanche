@@ -2,7 +2,6 @@
 
 #include "Particule.h"
 #include "Systeme.h"
-#include "constantes.h"
 #include <fstream>
 
 using namespace std;

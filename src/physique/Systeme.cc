@@ -107,8 +107,8 @@ void Systeme::dataEvolution(double t_final) {
   do {
     for (size_t i = 0; i < particules.size(); ++i) {
       Vecteur3D pos = particules[i]->get_position();
-      fichiers[i] << t << " " << pos.get_x() << " " << pos.get_y() << " "
-                  << pos.get_z() << "\n";
+      fichiers[i] << pos.get_x() << " " << pos.get_y() << " " << pos.get_z()
+                  << "\n";
     }
     evolue();
     t += dt;
