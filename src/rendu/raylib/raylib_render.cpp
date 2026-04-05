@@ -1,4 +1,3 @@
-
 #include "raylib_render.h"
 #include "Vecteur3D.h"
 #include "particule.h"
