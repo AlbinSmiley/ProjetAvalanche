@@ -53,11 +53,6 @@ public:
   Systeme(Systeme const &) = delete;
   Systeme &operator=(Systeme const &) = delete;
 
-  // dessin
-  void dessine_sur(SupportADessin &support) const override {
-    support.dessine(*this);
-  }
-
   // méthode d'évolution du système
   void evolue();
   // une méthode qui fait évoluer le système pendant un temps
@@ -65,6 +60,11 @@ public:
   void evolution(double, std::ostream &out);
   void dataEvolution(double);
   void affichageEvolution(double, std::ostream &out);
+
+  // dessin
+  void dessine_sur(SupportADessin &support) const override {
+    support.dessine(*this);
+  }
 };
 
 // affichage texte

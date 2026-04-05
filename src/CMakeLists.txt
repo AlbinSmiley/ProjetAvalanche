@@ -7,7 +7,7 @@ add_library(avalanche STATIC
     physique/Particule.cc
     physique/Source.cc
     physique/Systeme.cc
-    rendu/TextViewer.cc
+    rendu/text/TextViewer.cc
 )
 
 target_include_directories(avalanche PUBLIC
@@ -16,4 +16,6 @@ target_include_directories(avalanche PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/obstacles
     ${CMAKE_CURRENT_SOURCE_DIR}/physique
     ${CMAKE_CURRENT_SOURCE_DIR}/rendu
+    ${CMAKE_CURRENT_SOURCE_DIR}/rendu/text
+    ${CMAKE_CURRENT_SOURCE_DIR}/rendu/raylib
 )

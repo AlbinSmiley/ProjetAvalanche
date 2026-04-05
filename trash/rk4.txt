@@ -1,0 +1,631 @@
+#include "Particule.h"
+#include "Systeme.h"
+#include "TextViewer.h"
+#include "Vecteur3D.h"
+#include "constantes.h"
+#include <execution>
+#include <fstream>
+#include <vector>
+
+using namespace std;
+using namespace cst;
+
+// accesseurs
+vector<Particule *> const &Systeme::getParticules() const { return particules; }
+
+vector<Obstacle *> const &Systeme::getObstacles() const { return obstacles; }
+
+vector<Source *> const &Systeme::getSources() const { return sources; }
+
+// ajouts
+void Systeme::ajouteParticule(Particule *p) { particules.push_back(p); }
+
+void Systeme::ajouteObstacle(Obstacle *o) { obstacles.push_back(o); }
+
+void Systeme::ajouteSource(Source *s) { sources.push_back(s); }
+
+// affichage
+// c'est l'opérateur d'affichage
+ostream &operator<<(ostream &out, Systeme const &s) {
+
+  TextViewer vue(out); // outil d'afficahge
+  out << "Le systeme est constitue des " << s.getParticules().size()
+      << " particules suivantes :" << endl;
+
+  for (auto const &p : s.getParticules()) {
+    out << *p << endl;
+  }
+
+  out << "et de(s) " << s.getObstacles().size()
+      << " obstacles suivants :" << endl;
+
+  for (auto const &o : s.getObstacles()) {
+    (*o).dessine_sur(vue); // c'est du polymorphsime
+    out << endl;
+  }
+
+  if (!s.getSources().empty()) {
+    out << "et de(s) " << s.getSources().size()
+        << " sources suivantes :" << endl;
+
+    for (auto const &source : s.getSources()) {
+      (*source).dessine_sur(vue);
+      out << *source << endl;
+    }
+  }
+
+  return out;
+}
+
+void Systeme::evolue() {
+  for (size_t i = 0; i < particules.size(); i++) {
+    // force perso
+    particules[i]->ajouteForce(eta_milieu, rho_milieu);
+
+    // on ajoute a la particule i la force qu'exerce l'obstactle j
+    for (size_t j = 0; j < obstacles.size(); j++) {
+      particules[i]->ajouteForce(*obstacles[j]);
+    }
+
+    // on ajoute a la particule i la force qu'exerce la particule j
+    for (size_t j = 0; j < particules.size(); j++) {
+      if (i != j) {
+        particules[i]->ajouteForce(*particules[j]);
+      }
+    }
+  }
+  // après avoir calcule la force pour toute les particules on les applique à
+  // chaque particules. Ce choix d'algorithme nous semble plus "physiquement"
+  // logique.
+  for (auto particule : particules) {
+    particule->bouger(dt);
+  }
+}
+
+void Systeme::ajouteTouteLesForces(size_t index) {
+  // force perso
+  particules[index]->ajouteForce(eta_milieu, rho_milieu);
+
+  // on ajoute a la particule i la force qu'exerce l'obstactle j
+  for (size_t j = 0; j < obstacles.size(); j++) {
+    particules[index]->ajouteForce(*obstacles[j]);
+  }
+
+  // on ajoute a la particule i la force qu'exerce la particule j
+  for (size_t j = 0; j < particules.size(); j++) {
+    if (j != index) {
+      particules[index]->ajouteForce(*particules[j]);
+    }
+  }
+}
+
+void Systeme::ajouteTouteLesForces(Particule &part, size_t index) {
+  // force perso
+  part.ajouteForce(eta_milieu, rho_milieu);
+
+  // on ajoute a la particule i la force qu'exerce l'obstactle j
+  for (size_t j = 0; j < obstacles.size(); j++) {
+    part.ajouteForce(*obstacles[j]);
+  }
+
+  // on ajoute a la particule i la force qu'exerce la particule j
+  for (size_t j = 0; j < particules.size(); j++) {
+    if (j != index) {
+      part.ajouteForce(*particules[j]);
+    }
+  }
+}
+
+void Systeme::evolue_rk4() {
+  vector<vector<Vecteur3D>> new_val;
+
+  for (size_t i = 0; i < particules.size(); i++) {
+    ajouteTouteLesForces(i);
+
+    double m = particules[i]->get_masse();
+    Vecteur3D x = particules[i]->get_position();
+    Vecteur3D v = particules[i]->get_vitesse();
+    Vecteur3D F = particules[i]->get_force();
+
+    // premiere pente
+    Vecteur3D a1 = (1 / m) * (F);
+    Vecteur3D k1_x = v;
+    Vecteur3D k1_v = a1;
+
+    // pente du milieu
+    Particule p2 = *particules[i];
+    p2.forceNullifie();
+
+    Vecteur3D x_tmp = x + (dt / 2) * k1_x;
+    Vecteur3D v_tmp = x + (dt / 2) * k1_x;
+
+    p2.setVitesse(v_tmp);
+    p2.setPosition(x_tmp);
+
+    ajouteTouteLesForces(p2, i);
+    Vecteur3D F_tmp = p2.get_force();
+    Vecteur3D a2 = (1 / m) * F_tmp;
+
+    Vecteur3D k2_x = v_tmp;
+    Vecteur3D k2_v = a2;
+
+    // deuxieme pente du milieu
+    p2.forceNullifie();
+
+    x_tmp = x + (dt / 2) * k2_x;
+    v_tmp = v + (dt / 2) * k2_v;
+
+    p2.setVitesse(v_tmp);
+    p2.setPosition(x_tmp);
+
+    ajouteTouteLesForces(p2, i);
+    F_tmp = p2.get_force();
+
+    Vecteur3D a3 = (1 / m) * F_tmp;
+    Vecteur3D k3_x = v_tmp;
+    Vecteur3D k3_v = a3;
+
+    // pente de fin
+    p2.forceNullifie();
+
+    x_tmp = x + (dt)*k3_x;
+    v_tmp = v + (dt)*k3_v;
+
+    p2.setVitesse(v_tmp);
+    p2.setPosition(x_tmp);
+
+    ajouteTouteLesForces(p2, i);
+    F_tmp = p2.get_force();
+
+    Vecteur3D a4 = (1 / m) * F_tmp;
+    Vecteur3D k4_x = v_tmp;
+    Vecteur3D k4_v = a4;
+
+    Vecteur3D new_x = x + (dt / 6) * (k1_x + 2 * k2_x + 2 * k3_x + k4_x);
+    Vecteur3D new_v = v + (dt / 6) * (k1_v + 2 * k2_v + 2 * k3_v + k4_v);
+
+    new_val.push_back({new_x, new_v});
+  }
+  // après avoir calcule la force pour toute les particules on les applique à
+  // chaque particules. Ce choix d'algorithme nous semble plus "physiquement"
+  // logique.
+  for (size_t i = 0; i < particules.size(); i++) {
+    particules[i]->setPosition(new_val[i][0]);
+    particules[i]->setVitesse(new_val[i][1]);
+    particules[i]->forceNullifie();
+  }
+}
+
+void Systeme::evolution(double t_final, ostream &out) {
+  double t = 0;
+  out << "Condition initiale du système : " << endl;
+  out << (*this) << endl;
+  do {
+    out << "----------------------------- t = " << t
+        << " -----------------------------" << endl;
+    for (size_t i = 0; i < particules.size(); i++) {
+      out << i + 1 << " : " << *particules[i] << endl;
+    }
+    evolue();
+    t += dt;
+  } while (t <= t_final);
+}
+
+void Systeme::dataEvolution(double t_final) {
+  vector<ofstream> fichiers;
+  for (size_t i = 0; i < particules.size(); ++i) {
+    fichiers.emplace_back("./data/particule_" + to_string(i) + ".txt");
+    // fichiers[i] << "t x y z\n";
+  }
+
+  double t = 0;
+  do {
+    for (size_t i = 0; i < particules.size(); ++i) {
+      Vecteur3D pos = particules[i]->get_position();
+      fichiers[i] << pos.get_x() << " " << pos.get_y() << " " << pos.get_z()
+                  << "\n";
+    }
+    evolue_rk4();
+    t += dt;
+  } while (t <= t_final);
+}
+
+void affichageForcePerso(Particule *part, double eta, double rho,
+                         ostream &out) {
+  out << "\t\tf= "
+      << part->get_force()
+      // << "---(l=" << (part->lambda(eta, rho)).norme()
+      << "---(l=" << part->lambda(eta, rho) << ")--> f= " << part->ajouteForce()
+      << endl;
+}
+
+void affichageForceLJ(double dist, ostream &out) {
+  out << "\t\tforceLJ: 24 * " << EPSILON << " / " << SIGMA << "^2 * f(" << dist
+      << " / " << SIGMA << ")" << endl;
+  out << "\t\t\t = " << 24 * EPSILON / (SIGMA * SIGMA) << " * "
+      << facteur_f(dist / SIGMA) << endl;
+  out << "\t\t\t = " << 24 * EPSILON / (SIGMA * SIGMA) * facteur_f(dist / SIGMA)
+      << endl;
+}
+
+void affichageForceObstacle(Particule *part, Obstacle *obst, ostream &out) {
+  Vecteur3D ppp = obst->PointPlusProche(part->get_position());
+  double dist = (ppp - (part->get_position())).norme();
+  out << "\t\tpoint plus proche = " << ppp << ", distance = " << dist << endl;
+  affichageForceLJ(dist, out);
+  out << "\t\tf= " << part->ajouteForce(*obst) << ", f=" << part->get_force()
+      << endl;
+}
+
+void affichageForceParticule(Particule *main_part, Particule *sec_part,
+                             ostream &out) {
+  double dist = distance(*main_part, *sec_part);
+  out << "\t\tdistance entre particules = " << dist << endl;
+  affichageForceLJ(dist, out);
+  out << "\t\tdf= " << main_part->ajouteForce(*sec_part)
+      << ", f= " << main_part->get_force() << endl;
+}
+
+void affichageBouger(Particule *main_part, double dt, ostream &out) {
+  Vecteur3D x1 = main_part->get_position();
+  Vecteur3D v1 = main_part->get_vitesse();
+  main_part->bouger(dt);
+  Vecteur3D x2 = main_part->get_position();
+  Vecteur3D v2 = main_part->get_vitesse();
+
+  out << "\tf = " << main_part->get_force() << endl;
+  out << "\tdv= " << v2 - v1 << endl;
+  out << "\tdx= " << x2 - x1 << endl;
+  out << "\tx = " << x2 << endl;
+  out << "\tv = " << v2 << endl;
+}
+
+void Systeme::affichageEvolution(double t_final, ostream &out) {
+  double t = 0;
+
+  do {
+    out << "\n============================================================\n";
+    out << "                      Temps : " << t << "\n";
+    out << "============================================================\n\n";
+
+    out << (*this) << "\n";
+
+    out << "\n---------------------- evolue() -----------------------------\n";
+
+    for (size_t i = 0; i < particules.size(); i++) {
+      out << "\n[Particule " << i + 1 << "]\n";
+
+      out << "(a) Force \"perso\" :\n";
+      affichageForcePerso(particules[i], eta_milieu, rho_milieu, out);
+
+      out << "(b) Forces des obstacles :\n";
+      for (size_t j = 0; j < obstacles.size(); j++) {
+        out << "\t\t- Obstacle " << j + 1 << "\n";
+        affichageForceObstacle(particules[i], obstacles[j], out);
+      }
+
+      out << "(c) Forces des autres particules :\n";
+      for (size_t j = 0; j < particules.size(); j++) {
+        if (j != i) {
+          out << "\t\t------ Particule " << j + 1 << "------" << "\n";
+          affichageForceParticule(particules[i], particules[j], out);
+        }
+      }
+    }
+
+    out << "\n---------------------- bouger() -----------------------------\n";
+
+    for (size_t i = 0; i < particules.size(); i++) {
+      out << "\n[Particule " << i + 1 << "]" << endl;
+      affichageBouger(particules[i], dt, out);
+      out << "\t------" << endl;
+    }
+    t += dt;
+
+  } while (t <= t_final);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+#pragma once
+
+#include <iostream>
+#include <vector>
+
+#include "Dessinable.h"
+#include "Obstacle.h"
+#include "Particule.h"
+#include "Source.h"
+#include "SupportADessin.h"
+#include "constantes.h"
+
+class Systeme : public Dessinable {
+private:
+  std::vector<Particule *> particules;
+  std::vector<Obstacle *>
+      obstacles;                 // on veut du polymorphisme donc des pointeurs
+  std::vector<Source *> sources; // on veut du polymorphisme donc des pointeurs
+  //
+  double dt = cst::DT;
+  double eta_milieu = cst::ETA_AIR; // par défaut le système est dans l'air
+  double rho_milieu = cst::RHO_AIR;
+
+public:
+  // constructeur par défaut = système vide
+  Systeme() = default;
+
+  ~Systeme() {
+    for (auto p : particules)
+      delete p;
+    for (auto o : obstacles)
+      delete o;
+    for (auto s : sources)
+      delete s;
+  }
+
+  // getters
+  std::vector<Particule *> const &getParticules() const;
+  std::vector<Obstacle *> const &getObstacles() const;
+  std::vector<Source *> const &getSources() const;
+
+  // méthodes ajout d'un objet au système
+  void ajouteParticule(Particule *p);
+  void ajouteObstacle(Obstacle *o);
+  void ajouteSource(Source *s);
+
+  // les setters pour les attributs numérique du systèmes
+  void set_dt(double dt_) { dt = dt_; }
+  void set_eta(double eta) { eta_milieu = eta; }
+  void set_rho(double rho) { rho_milieu = rho; }
+
+  // On interdit la copie puisqu'on travaille avec des pointeurs
+  Systeme(Systeme const &) = delete;
+  Systeme &operator=(Systeme const &) = delete;
+
+  // dessin
+  void dessine_sur(SupportADessin &support) const override {
+    support.dessine(*this);
+  }
+
+  void ajouteTouteLesForces(size_t);
+  void ajouteTouteLesForces(Particule &, size_t);
+
+  // méthode d'évolution du système
+  void evolue();
+  void evolue_rk4();
+  // une méthode qui fait évoluer le système pendant un temps
+  // donné en affichant le sysètme à chaques pas de temps
+  void evolution(double, std::ostream &out);
+  void dataEvolution(double);
+  void affichageEvolution(double, std::ostream &out);
+};
+
+// affichage texte
+std::ostream &operator<<(std::ostream &out, Systeme const &s);
+
+//////////////////////////////////////////////////////////////////////////////////////
+///
+#pragma once
+#include <ostream>
+
+#include "Dessinable.h"
+#include "Obstacle.h"
+#include "Plan.h"
+#include "SupportADessin.h"
+#include "Vecteur3D.h"
+#include "constantes.h"
+
+class Particule : public Dessinable {
+private:
+  Vecteur3D position_; // distance en mm
+  Vecteur3D vitesse_;
+  double rayon_;
+  double rho_; // mg/mm³
+
+  /*
+      Puisque la masse d'une particule n'est pas susceptible de changer on la
+     définit comme attribut qui seras calculer par le constructeur en utilisant
+     la méthode masse().
+
+      Cela permet de limiter du potentiel calcul.
+  */
+  double masse_; // mg
+  const double masse() const;
+
+  // attribut suseptible de changer
+  Vecteur3D force_;
+
+public:
+  // Attribut statique publique qu'on pose en tant qu'alias pour eviter la copie
+  // et pour ne pas avoir à specifier le namespace à chaque fois
+  static constexpr double epsilon = cst::EPSILON;
+  static constexpr double sigma = cst::SIGMA;
+
+  // constructeur
+  Particule(Vecteur3D const &position, Vecteur3D const &vitesse, double rayon,
+            double rho = cst::RHO_PARTICULE // par défaut les particules ont
+                                            // toutes la même masse volumique
+            )
+      : position_(position), vitesse_(vitesse), rayon_(rayon), rho_(rho),
+        masse_(masse()) {}
+
+  // constructeur par copie
+  Particule(Particule const &autre)
+      : position_(autre.position_), vitesse_(autre.vitesse_),
+        rayon_(autre.rayon_), rho_(autre.rho_), masse_(autre.masse_) {}
+
+  // Getters pour les méthodes et surcharge externe
+  Vecteur3D get_position() const { return position_; }
+  Vecteur3D get_vitesse() const { return vitesse_; }
+  double get_rayon() const { return rayon_; }
+  double get_rho() const { return rho_; }
+  double get_masse() const {
+    return masse_;
+  } // un getter pour la masse car la méthode est privé et comme ça la classe et
+    // plus homogène
+  Vecteur3D get_force() const { return force_; }
+
+  // Méthodes
+  double forceLJ(Particule const &) const &;
+  Vecteur3D lambda(double, double) const;
+
+  Vecteur3D ajouteForce(Vecteur3D const &);
+  Vecteur3D ajouteForce(double eta_milieu = cst::ETA_AIR,
+                        double rho_milieu = cst::RHO_AIR);
+  Vecteur3D ajouteForce(Particule const &);
+
+  void bouger(double dt = cst::DT);
+
+  void setPosition(Vecteur3D const &);
+  void setVitesse(Vecteur3D const &);
+  void forceNullifie();
+  void setRayon(double);
+
+  Vecteur3D ajouteForce(Obstacle const &plan);
+
+  void dessine_sur(SupportADessin &support) const override {
+    support.dessine(*this);
+  }
+};
+
+std::ostream &operator<<(std::ostream &, Particule const &);
+
+Vecteur3D ecartOriente(Particule const &, Particule const &);
+double distance(Particule const &, Particule const &);
+
+double facteur_f(double);
+double facteurLJ(double);
+
+///////////////////////////////////////////////////////////////////////////////
+
+#include <cmath>
+#include <iostream>
+
+#include "Particule.h"
+#include "Plan.h"
+#include "Vecteur3D.h"
+#include "constantes.h"
+
+using namespace std;
+using namespace cst;
+
+const double Particule::masse()
+    const { // on part du principe qu'une particule est une sphère
+  return (4 * PI * rho_ * rayon_ * rayon_ * rayon_) / 3;
+}
+
+ostream &operator<<(ostream &out, Particule const &particule) {
+  out << "[ pos = " << particule.get_position()
+      << ", vit = " << particule.get_vitesse()
+      << ", m = " << particule.get_masse() << ", r = " << particule.get_rayon()
+      << " ]";
+  return out;
+}
+
+Vecteur3D ecartOriente(Particule const &p1, Particule const &p2) {
+  return p2.get_position() - p1.get_position();
+}
+
+double distance(Particule const &p1, Particule const &p2) {
+  return (ecartOriente(p1, p2)).norme();
+}
+
+double facteur_f(double x) {
+  double f;
+  if (x <= 1.0) {
+    f = -1.0;
+  } else if (x >= 2) {
+    f = 0.0;
+  } else {
+    f = (pow(x, 6) - 2) / (pow(x, 13));
+  }
+  return f;
+}
+
+double facteurLJ(double dis) {
+  double x = dis / SIGMA;
+  return 24 * EPSILON * facteur_f(x) / (SIGMA * SIGMA);
+}
+
+double Particule::forceLJ(Particule const &particule) const & {
+  double dis = distance((*this), particule);
+  return facteurLJ(dis);
+}
+
+Vecteur3D Particule::lambda(double eta_milieu_, double rho_milieu_) const {
+  double lamb;
+
+  double vit = (get_vitesse()).norme();
+  double temp = (80 * eta_milieu_) / (3 * rho_milieu_ * get_rayon());
+
+  bool condition = (vit <= temp);
+
+  if (condition) {
+    lamb = 6 * PI * get_rayon() * eta_milieu_;
+  } else {
+    lamb = (9 * PI * get_rayon() * get_rayon() * rho_milieu_ * vit) / 40;
+  }
+
+  Vecteur3D result = get_vitesse();
+  result *= lamb;
+
+  return result;
+}
+
+Vecteur3D Particule::ajouteForce(Vecteur3D const &force) {
+  force_ += force;
+  return force;
+}
+Vecteur3D Particule::ajouteForce(double eta_milieu_, double rho_milieu_) {
+  Vecteur3D df = get_masse() * G - lambda(eta_milieu_, rho_milieu_);
+  force_ += df;
+  return df;
+}
+Vecteur3D Particule::ajouteForce(Particule const &particule) {
+  Vecteur3D df = (forceLJ(particule)) * (~(ecartOriente((*this), particule)));
+  force_ += df;
+  return df;
+}
+
+void Particule::bouger(double dt) {
+  vitesse_ += force_ * (dt / masse_);
+  position_ += dt * vitesse_;
+
+  force_ = Vecteur3D(0.0, 0.0, 0.0);
+}
+
+void Particule::setRayon(double rayon) { rayon_ = rayon; }
+void Particule::setVitesse(Vecteur3D const &vitesse) {
+  vitesse_.set_x(vitesse.get_x());
+  vitesse_.set_y(vitesse.get_y());
+  vitesse_.set_z(vitesse.get_z());
+}
+void Particule::setPosition(Vecteur3D const &position) {
+  position_.set_x(position.get_x());
+  position_.set_y(position.get_y());
+  position_.set_z(position.get_z());
+}
+
+void Particule::forceNullifie() { force_ = Vecteur3D(0, 0, 0); };
+
+// la méthode ajouteForce
+Vecteur3D Particule::ajouteForce(Obstacle const &plan) {
+
+  Vecteur3D P = plan.PointPlusProche(position_);
+  Vecteur3D e = P - position_; // vecteur entre le plan et la particule
+
+  double d = e.norme(); // distance entre la particule et le plan
+
+  if (d < PRECISION)
+    return Vecteur3D(0, 0, 0); // sécurité si la particule est exacteemtn sur le
+                               // plan (division par 0)
+
+  Vecteur3D u = ~e;
+
+  double F = 2 * facteurLJ(d);
+
+  Vecteur3D df = F * u;
+
+  force_ += df;
+
+  return df;
+}
