@@ -30,18 +30,8 @@ Notre projet est organisé autour d’une séparation entre la simulation physiq
 
 - Systeme
   Représente l’ensemble du système simulé. Il contient des particules, des obstacles et des sources. Le système connaît dans quel environnement on est et comment le temps avance.
-
-
-3. Hiérarchie d’héritage
-
-La classe Dessinable est une classe abstraite qui représente tous les objets pouvant être affichés. Les classes Particule, Obstacle, Source et Systeme héritent de Dessinable.
-
-La classe Obstacle est une classe abstraite représentant un obstacle général. La classe Plan hérite de Obstacle car un plan est un type particulier d’obstacle. La classe Dalle hérite de Plan car une dalle "est un" plan avec des dimensions finies.
-
-La classe SupportADessin est une classe abstraite définissant une interface commune pour les différents types d’affichage. Les classes TextViewer et RaylibRender héritent de SupportADessin et implémentent chacune un mode de visualisation différent, respectivement en mode texte et en mode graphique.
-
-
-4. Affichage
+ 
+3. Affichage
 
 - Dessinable
   Classe abstraite pour tous les objets pouvant être affichés.
@@ -55,7 +45,15 @@ La classe SupportADessin est une classe abstraite définissant une interface com
 - RaylibRender
   Sous-classe de SupportADessin permettant un affichage graphique avec raylib.
 
-Les classes Particule, Obstacle, Plan, Dalle, Source et Systeme héritent de Dessinable et possèdent une méthode dessine_sur(...).
+Les classes Particule, Obstacle, Plan, Dalle, Source et Systeme héritent de Dessinable et possèdent une méthode dessine_sur().
+
+4. héritage
+
+La classe Dessinable est une classe abstraite qui représente tous les objets pouvant être affichés. Les classes Particule, Obstacle, Source et Systeme héritent de Dessinable.
+
+La classe Obstacle est une classe abstraite représentant un obstacle général. La classe Plan hérite de Obstacle car un plan est un type particulier d’obstacle. La classe Dalle hérite de Plan car une dalle "est un" plan avec des dimensions finies.
+
+La classe SupportADessin est une classe abstraite définissant une interface commune pour les différents types d’affichage. Les classes TextViewer et RaylibRender héritent de SupportADessin et implémentent chacune un mode de visualisation différent, respectivement en mode texte et en mode graphique.
 
 5. Encapsulation 
 
