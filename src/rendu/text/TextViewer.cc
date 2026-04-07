@@ -13,6 +13,8 @@ TextViewer::TextViewer(ostream &flot)
     : flot(flot) {
 } // constructeur : on mémorise le flot que lequel on veut écrire
 
+TextViewer::~TextViewer() = default;
+
 void TextViewer::dessine(Particule const &pa) {
   flot << pa;
 } // dessine une particule

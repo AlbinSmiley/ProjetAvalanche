@@ -8,8 +8,37 @@
 class RaylibRender : public SupportADessin {
 private:
   Camera3D camera;
+  bool deplacement = false;
+  bool pointeur = false;
+  bool lecture = false;
+
+  float vitesse_sim = 1.0f;
+
+  bool fenetre_ajout = false;
+  bool ajout_particule = false;
+  bool ajout_plan = false;
+
+  // des emplacement pour les champs texte pour l'ajout d'éléments
+  char buf_px[16] = "0";
+  bool edit_px = false;
+  char buf_py[16] = "0";
+  bool edit_py = false;
+  char buf_pz[16] = "2";
+  bool edit_pz = false;
+  char buf_vx[16] = "0";
+  bool edit_vx = false;
+  char buf_vy[16] = "0";
+  bool edit_vy = false;
+  char buf_vz[16] = "0";
+  bool edit_vz = false;
+  char buf_r[16] = "0.4";
+  bool edit_r = false;
 
 public:
+  static constexpr int PANEL_WIDTH = 220;
+  static constexpr int MIN_WINDOW_HAUTEUR = 800;
+  static constexpr int MIN_WINDOW_LARGEUR = 800;
+
   RaylibRender(); // constreucteur
   ~RaylibRender() override;
 
@@ -17,8 +46,12 @@ public:
 
   void dessine(Particule const &) override;
   void dessine(Systeme const &) override;
-  //   // void dessine(Obstacle const &) override;
-  //   void dessine(Dalle const &) override;
-  //   void dessine(Plan const &) override;
-  //   void dessine(Source const &) override;
+  void dessine(Obstacle const &) override {}
+  void dessine(Dalle const &) override;
+  void dessine(Plan const &) override;
+  void dessine(Source const &) override {}
+
+  void dessinePanel(Systeme &);
+  void fenetreParticule(Systeme &);
+  void fenetrePlan(Systeme &);
 };
