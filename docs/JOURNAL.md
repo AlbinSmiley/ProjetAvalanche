@@ -79,7 +79,7 @@ J’ai également créé la classe Dalle (héritée de Plan), qui représente un
 
 Difficultés rencontrées : compréhension de l’héritage, gestion des erreurs de compilation et interprétation géométrique des projections.
 
-Temps passé : 280 (fab) + ... (albin) min
+Temps passé : 280 (fab) + 67 (albin) min
 
 --------------------------------------------------
 
@@ -87,18 +87,28 @@ Temps passé : 280 (fab) + ... (albin) min
 
 Semaine 6
 
--Mise en place de l’architecture d’affichage avec les classes Dessinable et SupportADessin pour séparer la simulation de la visualisation.
--Implémentation de la classe TextViewer permettant un affichage texte des objets du système.
--Modification des classes Particule, Obstacle, Plan, Dalle et Source pour les rendre dessinables via la méthode dessine_sur().
--Création de la classe Systeme contenant les particules, obstacles et sources. Ajout des méthodes d’ajout, des accesseurs et de l’opérateur << pour afficher le système complet.
+- Mise en place de l’architecture d’affichage avec les classes Dessinable et SupportADessin pour séparer la simulation de la visualisation.
+- Implémentation de la classe TextViewer permettant un affichage texte des objets du système.
+- Modification des classes Particule, Obstacle, Plan, Dalle et Source pour les rendre dessinables via la méthode dessine_sur().
+- Création de la classe Systeme contenant les particules, obstacles et sources. Ajout des méthodes d’ajout, des accesseurs et de l’opérateur << pour afficher le système complet.
+- Mise en place de la simulation en mode text avec la class TextViewer. Un problème dont on ne savait pas l'origine à représenté des terreurs noctures pour Albin, le problème : une erreur de signe dans l'une des methodes ...
+- Mise en place de fonctions et méthodes tierces qui on permit d'entrer les données dans des fichiers .txt. (Suivit d'une briève utilisation d'un minuscule programme python pour visualiser graphiquement les données et vérifier qu'elle faisait du sens)
 
-Temps passé : 300 (fab)+ ... (albin) min
+Temps passé : 300 (fab) + 420 (albin) min
 
 --------------------------------------------------
 
 ## Semaine 7Â
 
-Temps passé :  min
+Dilemme interne quant au fait de vouloir utiliser OpenGL pour les graphisme (car Albin voyait dans les taches de cette semaine l'opportunité d'apprendre un nouvel outil), suivit d'un RAPIDE rappel à l'ordre après confrontation au concept de shaders...
+
+Apprentissage de raylib en suivant le tuto du cours.
+
+Mise en place des graphismes avec la class RaylibRender. Mise en place de la logique de l'implémentation des méthodes `dessine`. Ajout d'option graphique (boutons, état du système, ajout de particule et de plan, etc ...).
+
+Absence de compréhension des consignes de la semaine ... suivit du choix personnel de la structure du projet avec les graphismes (la structure du projet était déjà pas mal alors on a opté pour juste ajouter un dossier `src/rendu` pour la représentation graphique/textuelle).
+
+Temps passé : 480 min
 
 --------------------------------------------------
 
