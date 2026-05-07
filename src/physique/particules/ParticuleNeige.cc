@@ -1,7 +1,7 @@
 #include <cmath>
-#include <iostream>
 
 #include "ParticuleNeige.h"
+#include "ParticuleRoche.h"
 #include "Vecteur3D.h"
 #include "constantes.h"
 
@@ -35,4 +35,8 @@ double ParticuleNeige::forceLJ(ParticuleNeige const &particule)
 
 void ParticuleNeige::opere_sur(ParticuleNeige &other) const {
   other.add_force(forceLJ(other) * (~(ecartOriente(other, *this))));
+}
+
+void ParticuleNeige::opere_sur(ParticuleRoche &other) const {
+  // À faire
 }

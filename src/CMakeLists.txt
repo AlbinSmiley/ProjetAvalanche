@@ -8,6 +8,7 @@ add_library(avalanche STATIC
     physique/obstacles/Dalle.cc
     physique/particules/Particule.cc
     physique/particules/ParticuleNeige.cc
+    physique/particules/ParticuleRoche.cc
     rendu/text/TextViewer.cc
     rendu/raylib/raylib_render.cc
 )

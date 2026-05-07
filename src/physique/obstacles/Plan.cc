@@ -32,25 +32,6 @@ void Plan::opere_sur(ParticuleNeige &part) const {
   part.add_force(2 * part.facteurLJ(distance) * (~e));
 }
 
-// Vecteur3D ParticuleNeige::ajouteForce(Obstacle const &plan) {
-//
-//   Vecteur3D P = plan.PointPlusProche(position_);
-//   Vecteur3D e = P - position_; // vecteur entre le plan et la particule
-//
-//   double d = e.norme(); // distance entre la particule et le plan
-//
-//   if (d < PRECISION)
-//     return Vecteur3D(0, 0, 0); // sécurité si la particule est exacteemtn
-//     sur le
-//                                // plan (division par 0)
-//
-//   Vecteur3D u = ~e;
-//
-//   double F = 2 * facteurLJ(d);
-//
-//   Vecteur3D df = F * u;
-//
-//   force_ += df;
-//
-//   return df;
-// }
+void Plan::opere_sur(ParticuleRoche &part) const {
+  // À faire
+}

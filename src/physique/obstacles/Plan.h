@@ -22,6 +22,7 @@ public:
   }
 
   virtual void opere_sur(ParticuleNeige &) const override;
+  virtual void opere_sur(ParticuleRoche &) const override;
 };
 
 std::ostream &operator<<(std::ostream &, Plan const &);
