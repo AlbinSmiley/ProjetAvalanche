@@ -12,6 +12,7 @@ public:
   TextViewer(std::ostream &); // constreucteur
   ~TextViewer() override;
 
+  // void dessine(Particule const &) override;
   void dessine(Particule const &) override;
   void dessine(Systeme const &) override;
   void dessine(Obstacle const &) override;

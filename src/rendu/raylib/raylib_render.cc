@@ -1,5 +1,6 @@
 #include "raylib_render.h"
 #include "Dalle.h"
+#include "ParticuleNeige.h"
 #include "Particule.h"
 #include "Vecteur3D.h"
 #include "constantes.h"
@@ -264,7 +265,7 @@ void RaylibRender::fenetreParticule(Systeme &sys) {
   // boutons
   y += 50;
   if (GuiButton({(float)lx, (float)y, 120, 30}, "Confirmer")) {
-    sys.ajouteParticule(new Particule(
+    sys.ajouteParticule(new ParticuleNeige(
         Vecteur3D(atof(buf_px), atof(buf_py), atof(buf_pz)),
         Vecteur3D(atof(buf_vx), atof(buf_vy), atof(buf_vz)), atof(buf_r)));
     fenetre_ajout = false;

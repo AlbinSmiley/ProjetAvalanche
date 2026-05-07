@@ -3,6 +3,7 @@
 #include "Dalle.h"
 #include "Obstacle.h"
 #include "Particule.h"
+#include "ParticuleNeige.h"
 #include "Plan.h"
 #include "Source.h"
 #include "Systeme.h"
@@ -17,7 +18,7 @@ TextViewer::~TextViewer() = default;
 
 void TextViewer::dessine(Particule const &pa) {
   flot << pa;
-} // dessine une particule
+}
 
 void TextViewer::dessine(Obstacle const &ob) {
   flot << ob;

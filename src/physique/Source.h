@@ -9,8 +9,6 @@
 class Particule;
 class Aleatoire;
 
-using EnsembleParticule = std::vector<Particule *>;
-
 class Source : public Dessinable {
 private:
   Particule const &modele_;
@@ -34,7 +32,7 @@ public:
   void on();
   void off();
 
-  void creation(EnsembleParticule &, Aleatoire &, double dt = cst::DT,
+  void creation(std::vector<Particule *> &, Aleatoire &, double dt = cst::DT,
                 double eta_milieu = cst::ETA_AIR,
                 double rho_milieu = cst::RHO_AIR);
 
@@ -42,6 +40,7 @@ public:
     support.dessine(*this);
   }
 
+  bool is_on() const { return etat_; }
   // getter:
   Vecteur3D getPosition() const;
 };

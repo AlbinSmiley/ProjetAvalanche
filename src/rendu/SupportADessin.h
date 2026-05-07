@@ -1,6 +1,7 @@
 #pragma once
 
 class Particule;
+class ParticuleNeige;
 class Systeme;
 class Obstacle;
 class Plan;

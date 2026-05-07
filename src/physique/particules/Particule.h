@@ -1,15 +1,13 @@
 #pragma once
-#include <ostream>
 
+#include "Agent.h"
 #include "Dessinable.h"
-#include "Obstacle.h"
-#include "Plan.h"
 #include "SupportADessin.h"
 #include "Vecteur3D.h"
 #include "constantes.h"
 
-class Particule : public Dessinable {
-private:
+class Particule : public Agent, public Dessinable {
+protected:
   Vecteur3D position_; // distance en mm
   Vecteur3D vitesse_;
   double rayon_;
@@ -28,12 +26,9 @@ private:
   // attribut suseptible de changer
   Vecteur3D force_;
 
-public:
-  // Attribut statique publique qu'on pose en tant qu'alias pour eviter la copie
-  // et pour ne pas avoir à specifier le namespace à chaque fois
-  static constexpr double epsilon = cst::EPSILON;
-  static constexpr double sigma = cst::SIGMA;
+  virtual Vecteur3D lambda(double eta_milieu_, double rho_milieu_) const;
 
+public:
   // constructeur
   Particule(Vecteur3D const &position, Vecteur3D const &vitesse, double rayon,
             double rho = cst::RHO_PARTICULE // par défaut les particules ont
@@ -57,32 +52,20 @@ public:
   } // un getter pour la masse car la méthode est privé et comme ça la classe et
     // plus homogène
   Vecteur3D get_force() const { return force_; }
-
-  // Méthodes
-  double forceLJ(Particule const &) const &;
-  Vecteur3D lambda(double, double) const;
-
-  Vecteur3D ajouteForce(Vecteur3D const &);
-  Vecteur3D ajouteForce(double eta_milieu = cst::ETA_AIR,
-                        double rho_milieu = cst::RHO_AIR);
-  Vecteur3D ajouteForce(Particule const &);
-
-  void bouger(double dt = cst::DT);
+  void add_force(Vecteur3D const &f) { force_ += f; }
 
   void setVitesse(Vecteur3D const &);
   void setRayon(double);
 
-  Vecteur3D ajouteForce(Obstacle const &plan);
+  void bouger(double dt = cst::DT);
 
-  void dessine_sur(SupportADessin &support) const override {
-    support.dessine(*this);
-  }
+  virtual void ajouteForce(Agent const &) = 0;
+  // les seul méthodes qui ne dependent pas du type de particules
+  virtual void ajouteForce(double eta_milieu_, double rho_milieu_);
+  virtual Particule *clone() const = 0;
 };
 
 std::ostream &operator<<(std::ostream &, Particule const &);
 
 Vecteur3D ecartOriente(Particule const &, Particule const &);
 double distance(Particule const &, Particule const &);
-
-double facteur_f(double);
-double facteurLJ(double);

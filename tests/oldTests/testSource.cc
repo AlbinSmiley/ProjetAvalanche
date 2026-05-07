@@ -1,4 +1,3 @@
-#include "ParticuleNeige.h"
 #include "Source.h"
 #include <iostream>
 
@@ -6,7 +5,7 @@ using namespace std;
 
 int main() {
 
-  ParticuleNeige modele(Vecteur3D(0, 0, 0), Vecteur3D(1, 2, 3), 0.4, 12.5);
+  Particule modele(Vecteur3D(0, 0, 0), Vecteur3D(1, 2, 3), 0.4, 12.5);
 
   Vecteur3D origine(0, 0, 0);
   Vecteur3D vitesseInitial(1, 2, 3);
@@ -21,7 +20,7 @@ int main() {
   // Appel au constructeur de Source
   Source source(modele, origine, vitesseInitial, ecart_type_vitesse,
                 ecart_type_rayon, debit);
-  vector<Particule *> ensemble = {};
+  EnsembleParticule ensemble = {};
 
   Aleatoire generateur;
 

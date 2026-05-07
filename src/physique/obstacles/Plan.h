@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Obstacle.h"
+#include "ParticuleNeige.h"
 #include "SupportADessin.h"
 
 class Plan : public Obstacle {
@@ -19,6 +20,8 @@ public:
   void dessine_sur(SupportADessin &support) const override {
     support.dessine(*this);
   }
+
+  virtual void opere_sur(ParticuleNeige &) const override;
 };
 
 std::ostream &operator<<(std::ostream &, Plan const &);

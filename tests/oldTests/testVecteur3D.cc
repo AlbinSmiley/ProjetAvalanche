@@ -18,6 +18,23 @@ int main() {
   cout << "Vecteur 3 : " << v3 << endl;
   cout << "Vecteur 4 : " << v4 << endl;
 
+  // cout << "Le vecteur 1 est " ;
+  // if (v1 == v2) {
+  //     cout << "egal au vecteur 2";
+  // } else {
+  //     cout << "different du vecteur 2";
+  // }
+  //
+  // cout << endl;
+  //
+  // cout << "Le vecteur 1 est ";
+  //
+  // if (v1 != v3 ) {
+  //     cout << "different du vecteur 3";
+  // } else {
+  //     cout << "egal au vecteur 3";
+  // }
+
   v4 += v1;
   cout << "v4 += v1 : " << v4 << endl;
 

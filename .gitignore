@@ -4,3 +4,6 @@ compile_commands.json
 data/
 out/
 docs/uml/
+
+merge_files.zsh
+merged.txt
