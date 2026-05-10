@@ -78,3 +78,23 @@ Les classes Dessinable et SupportADessin ont des méthodes virtuelles.
 
 Dans la classe TextViewer, l’attribut flot est privé. Dans la classe RaylibRender, l’attribut camera est privé. Cela permet à chaque classe de décider soi-meme comment afficher l'objet (afficher du texte ou en graphique ).
 
+
+6. Optimisation des interactions entre particules
+
+Pour améliorer les performances de la simulation, nous avons implémenté une grille spatiale permettant d’éviter de calculer les interactions entre toutes les particules du système.
+
+- Triplet
+  Structure représentant les coordonnées entières d’une case de la grille spatiale. Elle est utilisée comme clé dans une table associative.
+
+- Grille
+  Classequi découper l’espace en cases de taille fixe. Chaque case contient la liste des particules présentes dans cette zone de l’espace grâce à une structure de type map<Triplet, vector<Particule*>>.
+
+La classe Grille fournit des méthodes permettant 
+- de déterminer dans quelle case se trouve une particule 
+- d’ajouter une particule dans la bonne case 
+- de reconstruire la grille à partir des positions actuelles des particules 
+- de récupérer les particules situées dans les cases voisines d’une particule donnée
+
+La méthode Systeme::evolue() a été modifiée pour utiliser cette grille. Au lieu de parcourir toutes les particules du système pour calculer les interactions, une particule n’interagit mtn qu’avec les particules contenues dans sa case et dans les cases voisines directes.
+
+Cette méthode permet de réduire la complexité du calcul des interactions de O(N²) à O(N) (hypothèse que les particules sont suffisamment bien réparties dans l’espace)

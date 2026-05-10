@@ -131,8 +131,17 @@ Temps passé :  min
 --------------------------------------------------
 
 ## Semaine 11Â
+Cette semaine, j’ai implémenté une optimisation du calcul des interactions entre particules en utilisant une grille spatiale.(P12)
 
-Temps passé :  min
+J’ai introduit une structure Triplet qui représentent les coordonnées entières des cases de la grille, ainsi qu’une classe Grille permettant de découper l’espace en cases de taille fixe.
+
+J’ai ensuite modifié la méthode Systeme::evolue() pour qu'une particule interagisse uniquement avec les particules présentes dans sa case et dans les cases voisines directes.
+
+Cela permet de réduire la complexité du calcul des interactions de O(N²) à O(N) (hypothèse que les particules sont suffisamment bien réparties dans l’espace)
+
+Difficultés rencontrées : compréhension de l'énoncé et organisation des nouvelles classes dans l’architecture du projet.
+
+Temps passé :  3h(fab) + (...) albin min
 
 --------------------------------------------------
 

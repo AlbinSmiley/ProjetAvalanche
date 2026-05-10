@@ -2,6 +2,7 @@
 #include "Particule.h"
 #include "TextViewer.h"
 #include "Vecteur3D.h"
+#include "Grille.h" //j'ai du changer ma méthode evolue ()
 #include <fstream>
 
 using namespace std;
@@ -55,31 +56,72 @@ ostream &operator<<(ostream &out, Systeme const &s) {
   return out;
 }
 
-void Systeme::evolue() {
-  for (size_t i = 0; i < particules.size(); i++) {
+//ancienne versioin de evolue()
+
+//void Systeme::evolue() {
+  //for (size_t i = 0; i < particules.size(); i++) {
     // force perso
-    particules[i]->ajouteForce(eta_milieu, rho_milieu);
+    //particules[i]->ajouteForce(eta_milieu, rho_milieu);
 
     // on ajoute a la particule i la force qu'exerce l'obstactle j
-    for (size_t j = 0; j < obstacles.size(); j++) {
-      particules[i]->ajouteForce(*obstacles[j]);
-    }
+    //for (size_t j = 0; j < obstacles.size(); j++) {
+      //particules[i]->ajouteForce(*obstacles[j]);
+    //}
 
     // on ajoute a la particule i la force qu'exerce la particule j
-    for (size_t j = 0; j < particules.size(); j++) {
-      if (i != j) {
-        particules[i]->ajouteForce(*particules[j]);
-      }
-    }
-  }
+    //for (size_t j = 0; j < particules.size(); j++) {
+      //if (i != j) {
+       // particules[i]->ajouteForce(*particules[j]);
+      //}
+   // }
+  //}
 
   // après avoir calcule la force pour toute les particules on les applique à
   // chaque particules. Ce choix d'algorithme nous semble plus "physiquement"
   // logique.
+  //for (auto particule : particules) {
+   // particule->bouger(dt);
+  //}
+//}
+
+void Systeme::evolue() {
+  // On choisit une taille de case
+  // Ici je prends 2.1 * SIGMA pour être strictement plus grand que 2*SIGMA.
+  Grille grille(2.1 * SIGMA);
+
+  // On remplit la grille avec les positions actuelles des particules.
+  grille.remplit(particules);
+
+  for (size_t i = 0; i < particules.size(); i++) {
+
+    particules[i]->ajouteForce(eta_milieu, rho_milieu);
+
+    // Force due aux obstacles.
+    // Cette partie ne change pas avec la grille.
+    for (size_t j = 0; j < obstacles.size(); j++) {
+      particules[i]->ajouteForce(*obstacles[j]);
+    }
+    // Nouvelle méthode :
+    // on ne regarde que les particules dans la même case et les cases voisines directes
+
+    vector<Particule*> candidates = grille.voisines(*particules[i]);
+
+    for (auto autre : candidates) {
+      // Il faut éviter qu'une particule interagisse avec elle-même
+      if (autre != particules[i]) {
+        particules[i]->ajouteForce(*autre);
+      }
+    }
+  }
+
+  // Après avoir calculé toutes les forces, on déplace les particules
+  //
+  // on ne bouge les particules après avoir calculé toutes les forces 
   for (auto particule : particules) {
     particule->bouger(dt);
   }
 }
+
 
 void Systeme::evolution(double t_final, ostream &out) {
   TextViewer vue(out);

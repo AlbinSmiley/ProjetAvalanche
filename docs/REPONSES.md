@@ -49,3 +49,19 @@ La classe Systeme représente l’ensemble du système simulé. Elle contient un
 Les particules sont stockées directement mais ce choix va surement changer étant donner qu'en semaine 10 il y aura plusieurs types de particules.Les obstacles et sources sont stockés par pointeurs afin de permettre le polymorphisme.
 
 La classe fournit des méthodes pour ajouter des éléments, des accesseurs, une méthode dessine_sur() pour l’affichage polymorphe et un opérateur << pour l’affichage textuel du système.
+
+### question P12.1 : 
+La complexité temporelle pire cas de cette solution est O(N) .
+
+Chaque particule ne teste plus son interaction avec toutes les autres particules du système, mais seulement avec les particules contenues dans sa case et dans les cases voisines directes. Comme le nombre de particules dans ces cases est supposé négligeable devant N, le nombre de tests effectués pour une particule est en O(1). Pour N particules, on obtient donc une complexité totale en O(N).
+
+L’inconvénient principal de cette méthode est qu’il faut gérer une structure de données supplémentaire représentant les cases de l’espace. Il faut aussi mettre à jour les cases lorsque les particules se déplacent. De plus, il faut bien choisir la taille des cases : si elles sont trop grandes, on effectue trop de tests inutiles mais si elles sont trop petites il y a beaucoup de cases à gérer. Et dans le pire cas où toutes les particules se retrouveraient dans la même case, la complexité redeviendrait O(N²).
+
+### question P12.2 : 
+Nous avons implémenté cette nouvelle méthode de calcul des interactions à l’aide d’une classe Grille. L’espace est découpé en cases de taille fixe ()>= 2σ)
+
+Chaque particule est associée à une case grâce à ses coordonnées spatiales. Les cases sont stockées dans une table associative de type std::map<Triplet, std::vector<Particule*>>, où Triplet représente les coordonnées entières d’une case.
+
+Avant chaque évolution du système, la grille est reconstruite à partir des positions actuelles des particules. Pendant le calcul des forces d’interaction une particule ne parcourt plus toutes les particules du système mais elle parcourt que les particules contenues dans sa case et dans les cases voisines directes.
+
+Cette méthode a été implémentée dans la classe Grille et utilisée dans la méthode Systeme::evolue().
