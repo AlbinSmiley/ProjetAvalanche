@@ -58,10 +58,10 @@ Chaque particule ne teste plus son interaction avec toutes les autres particules
 L’inconvénient principal de cette méthode est qu’il faut gérer une structure de données supplémentaire représentant les cases de l’espace. Il faut aussi mettre à jour les cases lorsque les particules se déplacent. De plus, il faut bien choisir la taille des cases : si elles sont trop grandes, on effectue trop de tests inutiles mais si elles sont trop petites il y a beaucoup de cases à gérer. Et dans le pire cas où toutes les particules se retrouveraient dans la même case, la complexité redeviendrait O(N²).
 
 ### question P12.2 : 
-Nous avons implémenté cette nouvelle méthode de calcul des interactions à l’aide d’une classe Grille. L’espace est découpé en cases de taille fixe ()>= 2σ)
+Nous avons implémenté cette nouvelle méthode de calcul des interactions à l’aide d’une classe Grille. L’espace est découpé en cases de taille fixe, choisie supérieure à 2σ.
 
-Chaque particule est associée à une case grâce à ses coordonnées spatiales. Les cases sont stockées dans une table associative de type std::map<Triplet, std::vector<Particule*>>, où Triplet représente les coordonnées entières d’une case.
+Chaque particule est associée à une case grâce à ses coordonnées spatiales . Les cases sont stockées dans un tableau tridimensionnel contenant, pour chaque case, la liste des particules qui s’y trouvent.
 
-Avant chaque évolution du système, la grille est reconstruite à partir des positions actuelles des particules. Pendant le calcul des forces d’interaction une particule ne parcourt plus toutes les particules du système mais elle parcourt que les particules contenues dans sa case et dans les cases voisines directes.
+Avant chaque évolution du système, la grille est reconstruite à partir des positions actuelles des particules. Pendant le calcul des forces d’interaction, une particule ne parcourt plus toutes les particules du système : elle parcourt uniquement les particules contenues dans sa case et dans les cases voisines directes.
 
 Cette méthode a été implémentée dans la classe Grille et utilisée dans la méthode Systeme::evolue().

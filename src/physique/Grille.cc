@@ -1,29 +1,35 @@
 using namespace std;
+
 #include "Grille.h"
 
-#include <cmath>
+// Constructeur : on crée un tableau 3D de dimensions nx * ny * nz.
+Grille::Grille(double pas, int nx, int ny, int nz)
+    : pas_(pas), nx_(nx), ny_(ny), nz_(nz)
+{
+  cases_.resize(nx_);
 
+  for (int i = 0; i < nx_; ++i) {
+    cases_[i].resize(ny_);
 
-Grille::Grille(double pas)
-    : pas_(pas)
-{}
-
-// On vide toutes les cases.
-// Après ça, la grille ne contient plus aucune particule.
-void Grille::vide() {
-  cases_.clear();
+    for (int j = 0; j < ny_; ++j) {
+      cases_[i][j].resize(nz_);
+    }
+  }
 }
 
-// Cette fonction transforme une position réelle en coordonnées entières de case.
-//
-// Exemple :
-// si pas_ = 1.0 et position = (2.3, 4.8, -0.2)
-// alors la case est (2, 4, -1)
-//
-// il faut juste prendre en compte que int(-0.2) donne 0 et pas -1 mais c'est un choix 
-Triplet Grille::case_de(Vecteur3D const& position) const {
-  
+// Vide toutes les cases, sans supprimer la grille elle-même.
+void Grille::vide() {
+  for (int i = 0; i < nx_; ++i) {
+    for (int j = 0; j < ny_; ++j) {
+      for (int k = 0; k < nz_; ++k) {
+        cases_[i][j][k].clear();
+      }
+    }
+  }
+}
 
+// Transforme une position réelle en coordonnées de case.
+Triplet Grille::case_de(Vecteur3D const& position) const {
   int i = int(position.get_x() / pas_);
   int j = int(position.get_y() / pas_);
   int k = int(position.get_z() / pas_);
@@ -31,31 +37,36 @@ Triplet Grille::case_de(Vecteur3D const& position) const {
   return {i, j, k};
 }
 
-// Ajoute une particule dans la case correspondant à sa position actuelle.
+// Vérifie qu'une case existe dans le tableau 3D.
+bool Grille::est_dans_grille(Triplet const& c) const {
+  return (c.x >= 0 and c.x < nx_ and
+          c.y >= 0 and c.y < ny_ and
+          c.z >= 0 and c.z < nz_);
+}
+
+// Ajoute une particule dans sa case.
 void Grille::ajoute(Particule* p) {
   Triplet c = case_de(p->get_position());
 
-  // cases_[c] crée la case si elle n'existe pas encore.
-  cases_[c].push_back(p);
-}
-
-// Reconstruit toute la grille à partir des positions actuelles des particules.
-void Grille::remplit(vector<Particule*> const& particules) {
-  vide();
-
-  for (auto p : particules) {
-    ajoute(p);
+  // Avec un tableau 3D, il faut vérifier que les indices existent.
+  if (est_dans_grille(c)) {
+    cases_[c.x][c.y][c.z].push_back(p);
   }
 }
 
-// Renvoie les particules dans la case de p et dans les 26 cases voisines.
-// En 3D, les voisines directes sont obtenues avec :
-// dx = -1, 0, 1
-// dy = -1, 0, 1
-// dz = -1, 0, 1
-// Cela fait 3^3 = 27 cases à regarder.
-vector<Particule*> Grille::voisines(Particule const& p) const {
+// Reconstruit la grille à partir des positions actuelles.
+void Grille::remplit(vector<Particule*> const& particules) {
+  vide();
 
+  for (vector<Particule*>::const_iterator p(particules.begin());
+       p != particules.end();
+       ++p) {
+    ajoute(*p);
+  }
+}
+
+// Renvoie les particules dans la case de p et les cases voisines.
+vector<Particule*> Grille::voisines(Particule const& p) const {
   vector<Particule*> resultat;
 
   Triplet c = case_de(p.get_position());
@@ -66,19 +77,14 @@ vector<Particule*> Grille::voisines(Particule const& p) const {
 
         Triplet voisine{c.x + dx, c.y + dy, c.z + dz};
 
-        // Recherche de la case voisine dans la map
-        map<Triplet, vector<Particule*>>::const_iterator it(
-            cases_.find(voisine)
-        );
+        if (est_dans_grille(voisine)) {
 
-        // Si la case existe
-        if (it != cases_.end()) {
+          vector<Particule*> const& contenu =
+              cases_[voisine.x][voisine.y][voisine.z];
 
-          // Parcours des particules contenues dans cette case
-          for (vector<Particule*>::const_iterator particule(it->second.begin());
-               particule != it->second.end();
+          for (vector<Particule*>::const_iterator particule(contenu.begin());
+               particule != contenu.end();
                ++particule) {
-
             resultat.push_back(*particule);
           }
         }
