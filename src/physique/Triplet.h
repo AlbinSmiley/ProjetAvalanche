@@ -7,4 +7,11 @@ struct Triplet {
   int y;
   int z;
 
+  //ajout pour la partie P13: 
+  bool operator<(Triplet const& autre) const {
+    if (x != autre.x) return x < autre.x;
+    if (y != autre.y) return y < autre.y;
+    return z < autre.z;
+  }
+
 };

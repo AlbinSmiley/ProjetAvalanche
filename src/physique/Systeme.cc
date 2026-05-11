@@ -87,7 +87,9 @@ ostream &operator<<(ostream &out, Systeme const &s) {
 void Systeme::evolue() {
   // On choisit une taille de case
   // Ici je prends 2.1 * SIGMA pour être strictement plus grand que 2*SIGMA.
-  Grille grille(2.1 * SIGMA, 100, 100, 100);
+  //P12 : Grille grille(2.1 * SIGMA, 100, 100, 100);
+  //P13:
+  Grille grille(2.1 * SIGMA);
 
   // On remplit la grille avec les positions actuelles des particules.
   grille.remplit(particules);

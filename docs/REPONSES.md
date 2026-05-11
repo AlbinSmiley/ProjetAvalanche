@@ -65,3 +65,18 @@ Chaque particule est associée à une case grâce à ses coordonnées spatiales 
 Avant chaque évolution du système, la grille est reconstruite à partir des positions actuelles des particules. Pendant le calcul des forces d’interaction, une particule ne parcourt plus toutes les particules du système : elle parcourt uniquement les particules contenues dans sa case et dans les cases voisines directes.
 
 Cette méthode a été implémentée dans la classe Grille et utilisée dans la méthode Systeme::evolue().
+
+### question P13.1 : 
+Dans cette version, les cases sont stockées dans une table associative :
+
+map<Triplet, vector<Particule*>>
+
+Pour chaque particule, on regarde sa case et les 26 cases voisines. Il y a donc un nombre constant de cases à consulter
+
+Avec une map, l’accès à une case coûte O(log M) (car map est souvent implemnté avec un arbre binaire) où M est le nombre de cases non vides. Comme M est au plus de l’ordre du nombre de particules N, on peut majorer ce coût par O(log N).
+
+Si les particules sont suffisamment bien réparties(dit dans P13), chaque case contient un nombre borné de particules. Le coût par particule est donc O(log N), et pour N particules on obtient une complexité en O(N log N).
+
+Cependant, dans le pire cas physique où toutes les particules se trouvent dans la même case, chaque particule doit encore interagir avec presque toutes les autres. Dans ce cas, on retombe sur une complexité en O(N²).
+
+L’avantage principal par rapport à la solution précédente avec tableau tridimensionnel est que l’on ne stocke que les cases occupées. Cela évite de bcp réserverde la mémoire pour des cases vides. Cette solution est donc plus adaptée à un espace grand ou peu rempli et elle ne nécessite pas de fixer à l’avance les dimensions de la grille
