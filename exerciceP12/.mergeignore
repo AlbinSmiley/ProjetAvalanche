@@ -1,0 +1,19 @@
+# dossiers
+.git/*
+tests/oldTests/
+build/*
+data/*
+build/*
+out/*
+.cache/*
+trash/*
+docs/*
+
+# fichiers
+.gitignore
+merged.txt
+src/rendu/raylib/raygui.h
+*.md
+*.png
+*.jpg
+*.pdf
