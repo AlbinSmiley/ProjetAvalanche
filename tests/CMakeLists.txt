@@ -14,6 +14,6 @@ add_test_exec(chute_libre)
 add_test_exec(testP5)
 add_test_exec(testTextViewer)
 add_test_exec(simulation)
-add_test_exec(sexerciceP12)
+add_test_exec(exerciceP12)
 
 

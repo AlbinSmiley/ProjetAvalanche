@@ -87,7 +87,7 @@ Pour améliorer les performances de la simulation, nous avons implémenté une g
   Structure représentant les coordonnées entières d’une case de la grille spatiale. Elle est utilisée comme clé dans une table associative.
 
 - Grille
-  Classequi découper l’espace en cases de taille fixe. Chaque case contient la liste des particules présentes dans cette zone de l’espace grâce à une structure de type map<Triplet, vector<Particule*>>.
+   Classe qui découpe l’espace en cases de taille fixe. Chaque case contient la liste des particules présentes dans cette zone de l’espace. Les cases sont stockées dans un tableau tridimensionnel, ce qui permet d’accéder directement à une case à partir de ses indices.
 
 La classe Grille fournit des méthodes permettant 
 - de déterminer dans quelle case se trouve une particule 
