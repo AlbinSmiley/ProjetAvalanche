@@ -98,3 +98,6 @@ La classe Grille fournit des méthodes permettant
 La méthode Systeme::evolue() a été modifiée pour utiliser cette grille. Au lieu de parcourir toutes les particules du système pour calculer les interactions, une particule n’interagit mtn qu’avec les particules contenues dans sa case et dans les cases voisines directes.
 
 Cette méthode permet de réduire la complexité du calcul des interactions de O(N²) à O(N) (hypothèse que les particules sont suffisamment bien réparties dans l’espace)
+
+A partir de l'exercice P13, Les cases sont stockées dans une table associative map<Triplet, vector<Particule*>>`, ce qui permet de ne stocker que les cases effectivement occupées par des particules. (les classes ne sont plus stockées dans un tableau tridimensionnel).
+Cette méthode permet de réduire la complexité du calcul des interactions par rapport à l’algorithme en O(N²). La complexité devient O(N log N).
