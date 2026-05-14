@@ -148,8 +148,9 @@ Temps passé :  3h(fab) + (...) albin min
 ## Semaine 12Â
 Cette semaine, j’ai implémenté une nouvelle optimisation du calcul des interactions entre particules en utilisant une table associative std::map (P13).
 J'ai mis à jour la classe grille,Triplet et Syytème afin que notre code soit optimisé comme demandé dans l'exercice P13. 
+j'ai aussi faite la classe ParticuleRoche car nous l'avions un peu laissé de cote 
 
-Temps passé : 120 (fab) min + (albin) min
+Temps passé : 200 (fab) min + (albin) min
 
 --------------------------------------------------
 

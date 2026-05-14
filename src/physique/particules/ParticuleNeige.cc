@@ -38,5 +38,25 @@ void ParticuleNeige::opere_sur(ParticuleNeige &other) const {
 }
 
 void ParticuleNeige::opere_sur(ParticuleRoche &other) const {
-  // À faire
-}
+  //distance entre la particule et la neige  
+  double dis = distance(*this, other);
+  //cas de sécurité si les deux particules sont au meme endroit 
+   if (dis == 0.0) {
+    return;
+  }
+
+  //si les particules sont trop loin 
+  if (dis >= 2.0 * SIGMA) {
+    return;
+  }
+
+//permet d'avoir la direction
+  Vecteur3D direction = ~(ecartOriente(other, *this));
+
+  //ici on a une repulsion plus faible qu'avec roche-roche
+//plus les particules sont ptroches plus la force devient grande
+   double force = 0.5 * EPSILON * (2.0 * SIGMA - dis) / SIGMA;
+
+   //on ajoute la force à la roche 
+   other.add_force(force * direction);
+  }

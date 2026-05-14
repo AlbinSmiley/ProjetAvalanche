@@ -16,6 +16,19 @@ Notre projet est organisé autour d’une séparation entre la simulation physiq
 - Particule
   Représente une particule du système. Elle possède une position, une vitesse, un rayon, une masse volumique, une masse et une force. Elle peut recevoir différentes forces et être déplacée.
 
+  A partir de P11: 
+  - Particule
+  Classe abstraite représentant une particule générale du système. Elle contient les attributs communs à toutes les particules : position, vitesse, rayon, masse volumique, masse et force. Elle définit les méthodes communes ajouteForce(), bouger() et clone() Comme les particules peuvent être de différents types Particule sert maintenant de classe mère abstraite.
+
+- ParticuleNeige
+  Hérite de Particule. Les interactions entre deux particules de neige utilisent le modèle de Lennard-Jones.
+
+- ParticuleRoche
+  Hérite de Particule. Elle utilise pas le modèle de Lennard-Jones, mais une interaction répulsive plus simple. Ca permet de différencier le comportement des roches de celui des particules de neige.
+
+- Agent
+  Classe abstraite représentant tout objet capable d’agir sur une particule. Les particules sont des Agent, car elles peuvent exercer des forces sur d’autres particules. Les obstacles peuvent aussi être des Agent.
+
 - Obstacle
   Classe abstraite représentant un obstacle fixe. Elle possède une position et une méthode virtuelle pure PointPlusProche(), car chaque type d’obstacle calcule différemment le point le plus proche d’une particule. Ce choix suit directement l’énoncé sur les obstacles. 
 
@@ -54,6 +67,30 @@ La classe Dessinable est une classe abstraite qui représente tous les objets po
 La classe Obstacle est une classe abstraite représentant un obstacle général. La classe Plan hérite de Obstacle car un plan est un type particulier d’obstacle. La classe Dalle hérite de Plan car une dalle "est un" plan avec des dimensions finies.
 
 La classe SupportADessin est une classe abstraite définissant une interface commune pour les différents types d’affichage. Les classes TextViewer et RaylibRender héritent de SupportADessin et implémentent chacune un mode de visualisation différent, respectivement en mode texte et en mode graphique.
+
+4.1 Polymorphisme multiple et interactions
+
+Pour gérer les interactions entre différents types de particules, nous avons introduit la classe abstraite Agent.
+
+Chaque Agent possède des méthodes virtuelles opere_sur() pour chaque type concret de particule :
+
+- opere_sur(ParticuleNeige&)
+- opere_sur(ParticuleRoche&)
+
+La méthode ajouteForce(Agent const& autre) est définie dans chaque sous-classe concrète de Particule. Elle appelle :
+
+autre.opere_sur(*this)
+
+Cela permet de choisir automatiquement la bonne interaction selon le type réel des deux objets. Par exemple :
+
+- ParticuleNeige sur ParticuleNeige : interaction de Lennard-Jones
+- ParticuleNeige sur ParticuleRoche : répulsion faible
+- ParticuleRoche sur ParticuleNeige : répulsion simple
+- ParticuleRoche sur ParticuleRoche : répulsion plus forte
+
+Ce système permet d’ajouter facilement de nouveaux types de particules avec des comportements différents, sans modifier toute la structure du projet.
+
+La classe Particule est maintenant abstraite. Les classes ParticuleNeige et ParticuleRoche héritent de Particule car ce sont deux types particuliers de particules.
 
 5. Encapsulation 
 
