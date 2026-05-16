@@ -9,7 +9,6 @@ add_library(avalanche STATIC
     physique/particules/Particule.cc
     physique/particules/ParticuleNeige.cc
     physique/particules/ParticuleRoche.cc
-    physique/Grille.cc
     rendu/text/TextViewer.cc
     rendu/raylib/raylib_render.cc
 
