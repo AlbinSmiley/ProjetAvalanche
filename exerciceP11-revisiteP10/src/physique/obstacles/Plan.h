@@ -10,7 +10,7 @@ protected:
 
 public:
   Plan(Vecteur3D const &position,
-       Vecteur3D const &normale); // voici un constructeur avec parametres
+       Vecteur3D  &n); // voici un constructeur avec parametres
 
   Vecteur3D getNormale() const;
 
