@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Obstacle.h"
-#include "ParticuleNeige.h"
 #include "SupportADessin.h"
 
 class Plan : public Obstacle {
@@ -10,7 +9,7 @@ protected:
 
 public:
   Plan(Vecteur3D const &position,
-       Vecteur3D const &n); // voici un constructeur avec parametres
+       Vecteur3D const &normale); // voici un constructeur avec parametres
 
   Vecteur3D getNormale() const;
 
@@ -20,9 +19,6 @@ public:
   void dessine_sur(SupportADessin &support) const override {
     support.dessine(*this);
   }
-
-  virtual void opere_sur(ParticuleNeige &) const override;
-  virtual void opere_sur(ParticuleRoche &) const override;
 };
 
 std::ostream &operator<<(std::ostream &, Plan const &);

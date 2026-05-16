@@ -65,12 +65,14 @@ double Vecteur3D::operator*(Vecteur3D const &autre)
   return x_ * autre.x_ + y_ * autre.y_ + z_ * autre.z_;
 }
 
-// Operateur unitaire, qui renvoie le vecteur de même direction mais de norme 1
-Vecteur3D Vecteur3D::operator~() const {
-  return (norme() > PRECISION) ? (*this) / norme() : (Vecteur3D());
-}
+Vecteur3D Vecteur3D::operator~() const { return (*this) / norme(); }
 
 Vecteur3D Vecteur3D::operator-() const { return (*this) * -1; }
+
+// string Vecteur3D::vecToString() const& {
+//     return "(" + to_string(x_) + "," + to_string(y_) + "," + to_string(z_) +
+//     ")";
+// }
 
 ostream &operator<<(ostream &out, Vecteur3D const &vec) {
   out << "(" << vec.get_x() << " " << vec.get_y() << " " << vec.get_z() << ")";

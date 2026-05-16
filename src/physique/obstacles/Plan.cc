@@ -1,7 +1,7 @@
 #include "Plan.h"
 #include "ParticuleRoche.h"
 
-Plan ::Plan(Vecteur3D const &position, Vecteur3D &n)
+Plan ::Plan(Vecteur3D const &position, Vecteur3D const &n)
     : Obstacle(position), normale(~n) {
 } // la formule de projection marche seuleemnt si la norme est unitaire(défini
   // dans Vecteur3D)

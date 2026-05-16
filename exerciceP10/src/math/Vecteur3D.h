@@ -13,6 +13,11 @@ public:
   Vecteur3D() : x_(0.0), y_(0.0), z_(0.0) {}
   // Constructeur usuel qui se comporte comme on le voudrait
   Vecteur3D(double x, double y, double z) : x_(x), y_(y), z_(z) {}
+  // Constructeur de copie (qui ne semble pas "incroyablement" utile mais ça ne
+  // coute rien de l'ajouter pour l'instant)
+  Vecteur3D(Vecteur3D const &autre)
+      : x_(autre.x_), y_(autre.y_), z_(autre.z_) {}
+
   // surchage d'operateur interne
   // comparaison
   bool operator==(Vecteur3D const &) const;

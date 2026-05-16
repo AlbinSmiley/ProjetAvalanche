@@ -1,7 +1,7 @@
 #include "raylib_render.h"
 #include "Dalle.h"
-#include "ParticuleNeige.h"
 #include "Particule.h"
+#include "ParticuleNeige.h"
 #include "Vecteur3D.h"
 #include "constantes.h"
 #include "raylib.h"
@@ -96,7 +96,7 @@ void RaylibRender::run(Systeme &sys) {
   while (!WindowShouldClose()) {
 
     const auto dt = GetFrameTime();
-    sys.set_dt(dt / 100.0);
+    sys.set_dt(dt * vitesse_sim / 100.0);
 
     if (IsKeyPressed(KEY_L)) {
       deplacement = !deplacement;
@@ -111,6 +111,11 @@ void RaylibRender::run(Systeme &sys) {
     }
 
     if (lecture && !fenetre_ajout) {
+      if (rk4) {
+        sys.rk4_On();
+      } else {
+        sys.rk4_Off();
+      }
       sys.evolue();
     }
 
@@ -136,10 +141,31 @@ void RaylibRender::run(Systeme &sys) {
 // fonction qui donne la couleur en fonction de la taille de la particule
 Color couleurParLeRayon(double rayon) {
   rayon = (float)rayon;
-  float hue = (4 * rayon * rayon) / (1 + 4 * rayon * rayon);
+  float hue = 360.0f * (4 * rayon * rayon) / (1 + 4 * rayon * rayon);
   Color c = ColorFromHSV(hue, 1.0f, 1.0f);
   return c;
 }
+
+// fonction qui dessine un vecteur en 3d, lambda représente la contraction de la
+// longueur
+// void DrawVector(Vecteur3D position, Vecteur3D direction, double lambda = 1) {
+//   Vector3 startPosRaylib = toRaylib(position);
+//   Vector3 endPosRaylib = toRaylib(position + lambda * direction);
+//
+//   double arrowLen = lambda * direction.norme();
+//   if (arrowLen < cst::PRECISION) return;
+//
+//   float h = (float)(0.25 * arrowLen); // tête = 25% de la longueur de la
+//   flèche float r = 0.4f * h;                 // rayon proportionnel à la
+//   hauteur
+//
+//   // position de la base du cone à dessiner
+//   Vecteur3D posBaseCone = position + lambda * direction - h * (~direction);
+//   Vector3 posBaseConeRaylib = toRaylib(posBaseCone);
+//
+//   DrawLine3D(startPosRaylib, endPosRaylib, GRAY);
+//   DrawCylinderEx(posBaseConeRaylib, endPosRaylib, r, 0.0f, 8, GRAY);
+// }
 
 void RaylibRender::dessine(Particule const &part) {
   float rayon = (float)part.get_rayon();
@@ -147,8 +173,11 @@ void RaylibRender::dessine(Particule const &part) {
 
   Color c = couleurParLeRayon(rayon);
 
+  // if (affiche_vect) {
+  //   DrawVector(part.get_position(), part.get_vitesse(), 0.5);
+  // }
+
   DrawSphere(pos, rayon, c);
-  // DrawSphereWires(pos, rayon, 2, 2, Fade(BLACK, 0.4f));
 }
 
 void RaylibRender::dessine(Plan const &plan) {
@@ -208,10 +237,16 @@ void RaylibRender::dessinePanel(Systeme &sys) {
     fenetrePlan(sys);
   }
 
-  GuiGroupBox({5, 225, 190, 100}, "Simulation");
+  GuiGroupBox({5, 225, 190, 200}, "Simulation");
   GuiToggle({15, 245, 170, 30}, lecture ? "Stop" : "Play", &lecture);
   GuiToggle({15, 270, 170, 30}, deplacement ? "Bouger" : "S'arrêter",
             &deplacement);
+  GuiToggle({15, 295, 170, 30}, rk4 ? "utiliser euler" : "utiliser rk4", &rk4);
+  DrawText(TextFormat("Vitesse : %.1fx", vitesse_sim), 15, 328, 16, BLACK);
+  GuiSlider({15, 347, 170, 20}, "0.1x", "5x", &vitesse_sim, 0.1f, 5.0f);
+  GuiToggle({15, 367, 170, 30},
+            affiche_vect ? "cacher les vitesses" : "afficher les vitesses",
+            &affiche_vect);
 }
 
 void RaylibRender::fenetreParticule(Systeme &sys) {

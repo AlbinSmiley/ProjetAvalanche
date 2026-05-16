@@ -8,20 +8,20 @@ Vous pouvez ajouter vos propres tâches si vous le jugez utile
 - [X] créer le JOURNAL      1
 - [X] lire complètement le descriptif général   15
 - [X] s'inscrire en binôme     0
-- [X] fusionner les deux projets (y compris les fichiers JOURNAL) ??
-- [X] Makefile                                                ??
+- [X] fusionner les deux projets (y compris les fichiers JOURNAL) 0
+- [X] Makefile                                                10
 - [X] Vecteur finis (pleinement opérationnels et testés)   ??
-- [ ] fichier REPONSES                                          ??
+- [X] fichier REPONSES                                          10
 - [X] Particules simples                                          ??
 - [X] Obstacles                                            ??
-- [ ] Dessinable + SupportADessin                                 ??
+- [X] Dessinable + SupportADessin                                 ??
 - [X] System                                                 ??
-- [ ] exerciceP9 (simulation textuelle)                          ??
-- [ ] Graphisme : cadre général (reprise des exemples tuto)     ??
-- [ ] Graphisme : adaptation Ã  ce projet spécifique            ??
-- [ ] Particules diverses                                         ??
-- [ ] Amélioration du modèle                                      ??
-- [ ] Meilleurs voisinages                                      ??
+- [X] exerciceP9 (simulation textuelle)                          ??
+- [X] Graphisme : cadre général (reprise des exemples tuto)     ??
+- [X] Graphisme : adaptation à ce projet spécifique            ??
+- [X] Particules diverses                                         ??
+- [X] Amélioration du modèle                                      ??
+- [X] Meilleurs voisinages                                      ??
 - [ ] fichier CONCEPTION                                          ??
 - [ ] fichier README                                         ??
 - [ ] fichier NOMS                                         ??
@@ -114,23 +114,28 @@ Temps passé : 480 min
 
 ## Semaine 8Â
 
-Temps passé :  min
+Temps passé : 0 min
 
 --------------------------------------------------
 
 ## Semaine 9Â
 
-Temps passé :  min
+Temps passé : 0 min
 
 --------------------------------------------------
 
 ## Semaine 10Â
 
-Temps passé :  min
+Implémentation de Agent ainsi que des différents type de particules (particuleNeige et particuleRoche). Restructuration du projet (mise en place du dossier `src/physique/particules/`). Ajout des méthodes `clone` pour accèder au pointeur. Mise en place des différentes intéractions entre les particules ainsi qu'avec les obstactles (i.e. les agents).
+
+Nous avions déjà particuleRoche dans le projet mais les méthodes opere_sur() qui concernait les particuleRoche étaient vides.  
+
+Temps passé : 120 min
 
 --------------------------------------------------
 
 ## Semaine 11Â
+
 Cette semaine, j’ai implémenté une optimisation du calcul des interactions entre particules en utilisant une grille spatiale.(P12)
 
 J’ai introduit une structure Triplet qui représentent les coordonnées entières des cases de la grille, ainsi qu’une classe Grille permettant de découper l’espace en cases de taille fixe.
@@ -146,9 +151,12 @@ Temps passé :  3h(fab) + (...) albin min
 --------------------------------------------------
 
 ## Semaine 12Â
+
 Cette semaine, j’ai implémenté une nouvelle optimisation du calcul des interactions entre particules en utilisant une table associative std::map (P13).
-J'ai mis à jour la classe grille,Triplet et Syytème afin que notre code soit optimisé comme demandé dans l'exercice P13. 
-j'ai aussi fait la classe ParticuleRoche car nous l'avions un peu laissé de cote 
+
+J'ai mis à jour la classe grille,Triplet et Syytème afin que notre code soit optimisé comme demandé dans l'exercice P13.
+
+j'ai aussi fait la classe ParticuleRoche car nous l'avions un peu laissé de cote (elle était là mais nous n'avions pas encore choisis comment elles intéragissait)
 
 Temps passé : 200 (fab) min + (albin) min
 

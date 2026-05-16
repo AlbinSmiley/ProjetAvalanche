@@ -35,6 +35,7 @@ void Particule::bouger(double dt) {
 
 void Particule::setRayon(double rayon) { rayon_ = rayon; }
 void Particule::setVitesse(Vecteur3D const &vitesse) { vitesse_ = vitesse; }
+void Particule::setPosition(Vecteur3D const &position) { position_ = position; }
 
 Vecteur3D Particule::lambda(double eta_milieu_, double rho_milieu_) const {
   double lamb;

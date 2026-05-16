@@ -3,7 +3,6 @@
 #include <iostream>
 #include <vector>
 
-#include "Aleatoire.h"
 #include "Dessinable.h"
 #include "Obstacle.h"
 #include "Particule.h"
@@ -21,15 +20,6 @@ private:
   double dt = cst::DT;
   double eta_milieu = cst::ETA_AIR; // par défaut le système est dans l'air
   double rho_milieu = cst::RHO_AIR;
-
-  Aleatoire gen = Aleatoire();
-
-  void calculerForces(); // méthodes qui calcule les forces appliqué à toutes
-                         // les particules
-
-  // attribut et méthodes pour l'utilisation de rk4
-  bool use_rk4 = false;
-  void evolue_rk4();
 
 public:
   // constructeur par défaut = système vide
@@ -70,10 +60,6 @@ public:
   void evolution(double, std::ostream &out);
   void dataEvolution(double);
   void affichageEvolution(double, std::ostream &out);
-
-  // méthodes nécéssaire à l'utilisation de rk4
-  void rk4_On() { use_rk4 = true; }
-  void rk4_Off() { use_rk4 = false; }
 
   // dessin
   void dessine_sur(SupportADessin &support) const override {
