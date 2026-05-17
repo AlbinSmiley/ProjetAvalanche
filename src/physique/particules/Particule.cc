@@ -30,7 +30,7 @@ void Particule::bouger(double dt) {
   vitesse_ += force_ * (dt / masse_);
   position_ += dt * vitesse_;
 
-  force_ = Vecteur3D(0.0, 0.0, 0.0);
+  resetForce();
 }
 
 void Particule::setRayon(double rayon) { rayon_ = rayon; }

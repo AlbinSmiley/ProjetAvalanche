@@ -13,21 +13,28 @@
 
 class Systeme : public Dessinable {
 private:
+  // on a des ensemble hétérogène il nous faut donc utiliser des pointeurs.
   std::vector<Particule *> particules;
-  std::vector<Obstacle *>
-      obstacles;                 // on veut du polymorphisme donc des pointeurs
-  std::vector<Source *> sources; // on veut du polymorphisme donc des pointeurs
-  //
+  std::vector<Obstacle *> obstacles;
+  std::vector<Source *> sources;
+
+  // on pose les valeurs qui dicte comment le système ce comporte ici (elle ne
+  // sont pas constante car dans la simulation il est possible de changer
+  // certaines valeurs)
   double dt = cst::DT;
-  double eta_milieu = cst::ETA_AIR; // par défaut le système est dans l'air
+  double eta_milieu = cst::ETA_AIR;
   double rho_milieu = cst::RHO_AIR;
 
+  // on utilise un generateur aleatoire comme attribut pour ne pas avoir a le
+  // redefinir dans les boucles
   Aleatoire gen = Aleatoire();
 
-  void calculerForces(); // méthodes qui calcule les forces appliqué à toutes
-                         // les particules
+  // Méthode intermédiaire qui permet le calcule de toute les forces appliqué à
+  // toute les particules du système. permet un code plus clair.
+  void calculerForces();
 
-  // attribut et méthodes pour l'utilisation de rk4
+  // attribut et méthodes pour l'utilisation de rk4, on utilise euler-cromer par
+  // défaut. Le booléen définit si c'est rk4 ou non qui sera utilisé.
   bool use_rk4 = false;
   void evolue_rk4();
 
@@ -59,7 +66,8 @@ public:
   void set_eta(double eta) { eta_milieu = eta; }
   void set_rho(double rho) { rho_milieu = rho; }
 
-  // On interdit la copie puisqu'on travaille avec des pointeurs
+  // On interdit la copie puisqu'on travaille avec des pointeurs et que copier
+  // un systeme pourrait s'avérer gourment en calcule.
   Systeme(Systeme const &) = delete;
   Systeme &operator=(Systeme const &) = delete;
 

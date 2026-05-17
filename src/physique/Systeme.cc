@@ -22,8 +22,7 @@ void Systeme::ajouteObstacle(Obstacle *o) { obstacles.push_back(o); }
 
 void Systeme::ajouteSource(Source *s) { sources.push_back(s); }
 
-// affichage
-// c'est l'opérateur d'affichage
+// implémentation de l'afficahge en CLI avec l'opérateur <<
 ostream &operator<<(ostream &out, Systeme const &s) {
 
   TextViewer vue(out); // outil d'afficahge
@@ -84,6 +83,8 @@ ostream &operator<<(ostream &out, Systeme const &s) {
 //}
 //}
 
+// Méthode intermédiaire qui permet le calcule de toute les forces appliqué à
+// toute les particules du système
 void Systeme::calculerForces() {
   // On choisit une taille de case
   // Ici je prends 2.1 * SIGMA pour être strictement plus grand que 2*SIGMA.
@@ -118,6 +119,7 @@ void Systeme::calculerForces() {
   }
 }
 
+// implémentation de l'algoritme rk4
 void Systeme::evolue_rk4() {
   // on copie les vitesses et positions actuelles des particules
   int n = particules.size();
@@ -187,6 +189,7 @@ void Systeme::evolue_rk4() {
   }
 }
 
+// méthode évolue qui permet d'utilisation des deux algoritme mis en place.
 void Systeme::evolue() {
   for (auto source : sources) {
     source->creation(particules, gen, dt, eta_milieu, rho_milieu);
@@ -208,6 +211,7 @@ void Systeme::evolue() {
   }
 }
 
+// méthode permettant d'afficher les données en CLI.
 void Systeme::evolution(double t_final, ostream &out) {
   TextViewer vue(out);
   double t = 0;
@@ -232,7 +236,6 @@ void Systeme::dataEvolution(
   vector<ofstream> fichiers;
   for (size_t i = 0; i < particules.size(); ++i) {
     fichiers.emplace_back("./data/particule_" + to_string(i) + ".txt");
-    // fichiers[i] << "t x y z\n";
   }
 
   double t = 0;

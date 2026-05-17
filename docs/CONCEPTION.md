@@ -139,3 +139,11 @@ Cette méthode permet de réduire la complexité du calcul des interactions de $
 
 À partir de l'exercice P13, les cases sont stockées dans une table associative `map<Triplet, vector<Particule*>>`, ce qui permet de ne stocker que les cases effectivement occupées par des particules (les cases ne sont plus stockées dans un tableau tridimensionnel).
 Cette méthode permet de réduire la complexité du calcul des interactions par rapport à l'algorithme en $O(N^2)$ : la complexité devient $O(N \log N)$.
+
+## Exstensions
+
+Nous avons apporter plusieurs choses en plus au projet.
+
+Dans un premier temps nous avons ajouter l'options d'utiliser l'algorithme RK4 pour la méthode `Systeme::calculerForces()`, cet algorithme permet une meilleur fluidité dans la simulation grâce à plus petite marge d'erreur dans la résolution de l'équation différentielle du mouvement des particules ($\vec{F}=m\vec{a}$).
+
+Secondement nous avons également apporté le fait que les particules dans la simulation graphique on une couleur qui dépends de leur rayon ainsi que de leur masse volumique, cela permet de mieux les différentier.
