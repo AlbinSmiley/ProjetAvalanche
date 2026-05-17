@@ -34,6 +34,8 @@ Par exemple pour voire la simulation graphique : `./build/bin/simulation`.
 
 ## Structure du projet
 
+Les versions demandé pour le rendu final se trouvent dans le dossier `versions/`, l'ensemble du programme se trouve dans le dossier `src/`, le code pour les tests et autres `main` se trouve dans `tests/`. Le journal, le fichier de conception et de réponses se trouvent dans le dossier `docs/` accompagné d'un diagramm de class généré par clang-uml précédemment.
+
 La structure du projet peut se résumé grâce à l'arbre suivant :
 
 ```
@@ -86,8 +88,7 @@ La structure du projet peut se résumé grâce à l'arbre suivant :
 │   ├── testAleatoire.cc
 │   ├── testP5.cc
 │   ├── exerciceP9.cc
-│   ├── exerciceP12.cc
-│   └── oldTests/
+│   └── exerciceP12.cc
 └── build/
     └── bin/
         ├── simulation
