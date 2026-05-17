@@ -139,4 +139,3 @@ Cette méthode permet de réduire la complexité du calcul des interactions de $
 
 À partir de l'exercice P13, les cases sont stockées dans une table associative `map<Triplet, vector<Particule*>>`, ce qui permet de ne stocker que les cases effectivement occupées par des particules (les cases ne sont plus stockées dans un tableau tridimensionnel).
 Cette méthode permet de réduire la complexité du calcul des interactions par rapport à l'algorithme en $O(N^2)$ : la complexité devient $O(N \log N)$.
-
