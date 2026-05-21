@@ -113,8 +113,9 @@ Temps passé : 480 min
 --------------------------------------------------
 
 ## Semaine 8Â
+notre projet ne compilait plus sur la VM donc nous avons du trouver l'erreur (notre makefile éltaient mal défini...)
 
-Temps passé : 0 min
+Temps passé : 120 min
 
 --------------------------------------------------
 
@@ -169,6 +170,8 @@ Temps passé : 200 (fab) min + (albin) min
 --------------------------------------------------
 
 ## Semaine 13Â
+cette semaine nous avon mis au propre notre projet (mise à jour du journal, compléter la conception, ajout de commentaire )
+Nous avons compléter le readme et nous avons vérifier que tous les tests fonctionnent. 
 
 Temps passé :  min
 
