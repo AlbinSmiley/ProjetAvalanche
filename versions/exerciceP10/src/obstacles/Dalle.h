@@ -12,10 +12,10 @@ private: //"les nouvelles informations"
 public:
     //le constructeur
     Dalle(Vecteur3D const& position,
-          Vecteur3D const& normale,
+          Vecteur3D & n,
           double largeur,
           double longueur,
-          Vecteur3D const& directionLongueur);
+          Vecteur3D & directionLongueur);
 
     double getLargeur() const;
     double getLongueur() const;
