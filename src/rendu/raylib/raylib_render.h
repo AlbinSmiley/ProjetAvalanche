@@ -39,7 +39,7 @@ private:
 public:
   static constexpr int PANEL_WIDTH = 220;
   static constexpr int MIN_WINDOW_HAUTEUR = 800;
-  static constexpr int MIN_WINDOW_LARGEUR = 800;
+  static constexpr int MIN_WINDOW_LARGEUR = 1000;
 
   RaylibRender(); // constreucteur
   ~RaylibRender() override;

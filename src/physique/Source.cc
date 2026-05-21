@@ -31,6 +31,7 @@ void Source::creation(vector<Particule *> &ensemble, Aleatoire &generateur,
           generateur.gaussienne(mean_y, ecart_type_vitesse_initial_),
           generateur.gaussienne(mean_z, ecart_type_vitesse_initial_));
 
+      copie->setPosition(position_);
       copie->setVitesse(nouvelleVitesse);
       copie->setRayon(generateur.gaussienne(mean_rayon, ecart_type_rayons_));
 

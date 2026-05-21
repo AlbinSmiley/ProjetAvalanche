@@ -6,6 +6,19 @@
 
 ---
 
+## Réponses aux questions pour ce document
+
+Nous avons fait toute la partie obligatoire de ce projet, nous avons également apporté quelques compléments :
+
+- Dalle comme obstacles
+- La positibilité d'utilisé l'algorithme RK4
+- La couleur des particules dans la simulation graphique dépend de ses dimensions physiques
+- Nous avons également ajouté quelques options dans la simulation graphique
+
+Nous avons donc bien une version graphique qui utilise la bibliothèques raylib
+
+Nous estimons avoir passé en moyenne 5h par semaine tout les deux sur ce projet ...
+
 ## Démarrage rapide
 
 1. Se placer à la racine du projet
