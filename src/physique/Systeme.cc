@@ -110,7 +110,7 @@ void Systeme::calculerForces() {
 
     vector<Particule *> candidates = grille.voisines(*particules[i]);
 
-    for (auto autre : candidates) {
+    for (auto &autre : candidates) {
       // Il faut éviter qu'une particule interagisse avec elle-même
       if (autre != particules[i]) {
         particules[i]->ajouteForce(*autre);
@@ -155,7 +155,7 @@ void Systeme::evolue_rk4() {
     }
 
     // on remet les forces à 0 et on calcule les forces à l'état actuelle
-    for (auto part : particules) {
+    for (auto &part : particules) {
       part->resetForce();
     }
     calculerForces();
@@ -191,21 +191,21 @@ void Systeme::evolue_rk4() {
 
 // méthode évolue qui permet d'utilisation des deux algoritme mis en place.
 void Systeme::evolue() {
-  for (auto source : sources) {
+  for (auto &source : sources) {
     source->creation(particules, gen, dt, eta_milieu, rho_milieu);
   }
   if (use_rk4) {
     evolue_rk4();
   } else {
     // on remet les forces à 0 et on calcule les forces à l'état actuelle
-    for (auto part : particules) {
+    for (auto &part : particules) {
       part->resetForce();
     }
     calculerForces();
     // Après avoir calculé toutes les forces, on déplace les particules
     //
     // on ne bouge les particules après avoir calculé toutes les forces
-    for (auto particule : particules) {
+    for (auto &particule : particules) {
       particule->bouger(dt);
     }
   }
