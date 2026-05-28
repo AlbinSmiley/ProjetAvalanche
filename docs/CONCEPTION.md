@@ -58,7 +58,7 @@ Notre projet est organisé autour d'une séparation entre la simulation physique
 - **`RaylibRender`**
   Sous-classe de `SupportADessin` permettant un affichage graphique avec raylib.
 
-Les classes `Particule`, `Obstacle`, `Plan`, `Dalle`, `Source` et `Systeme` héritent de `Dessinable` et possèdent une méthode `dessine_sur()`.
+Les classes `Particule`, `Obstacle`, `Plan`, `Dalle`, `Source` et `Systeme` héritent de `Dessinable` et possèdent une méthode `dessine_sur()`. On peut donc afficher graphiquement la plupart de ses classes avec Raylib.
 
 ## Héritage
 
