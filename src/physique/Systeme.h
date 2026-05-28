@@ -43,11 +43,11 @@ public:
   Systeme() = default;
 
   ~Systeme() {
-    for (auto p : particules)
+    for (auto &p : particules)
       delete p;
-    for (auto o : obstacles)
+    for (auto &o : obstacles)
       delete o;
-    for (auto s : sources)
+    for (auto &s : sources)
       delete s;
   }
 
