@@ -5,6 +5,7 @@
 using namespace std;
 using namespace cst;
 
+//affichage d'une particule
 ostream &operator<<(ostream &out, Particule const &particule) {
   out << "[ pos = " << particule.get_position()
       << ", vit = " << particule.get_vitesse()
@@ -18,6 +19,7 @@ const double Particule::masse()
   return (4 * PI * rho_ * rayon_ * rayon_ * rayon_) / 3;
 }
 
+// Retourne le vecteur allant de p1 vers p2
 Vecteur3D ecartOriente(Particule const &p1, Particule const &p2) {
   return p2.get_position() - p1.get_position();
 }

@@ -147,7 +147,7 @@ Cela permet de réduire la complexité du calcul des interactions de O(N²) à O
 
 Difficultés rencontrées : compréhension de l'énoncé et organisation des nouvelles classes dans l’architecture du projet.
 
-Temps passé :  3h(fab) + (...) albin min
+Temps passé :  180 (fab) + 60 albin min
 
 --------------------------------------------------
 
@@ -165,18 +165,20 @@ Albin :
 
 Ajout des sources dans la simulation, ajout de la possibilité d'utiliser l'algorithme Runge-Kutta 4 pour la méthode `evolue`.
 
-Temps passé : 200 (fab) min + (albin) min
+Temps passé : 200 (fab) min + 240 (albin) min
 
 --------------------------------------------------
 
 ## Semaine 13Â
-cette semaine nous avon mis au propre notre projet (mise à jour du journal, compléter la conception, ajout de commentaire )
+cette semaine nous avon mis au propre notre projet (mise à jour du journal, compléter la conception, ajout de commentaires )
 Nous avons compléter le readme et nous avons vérifier que tous les tests fonctionnent. 
 
-Temps passé :  min
+Temps passé : 240 min
 
 --------------------------------------------------
 
 ## Semaine 14Â
+
+rendu du projet 
 
 Temps passé :  min

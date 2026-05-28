@@ -8,7 +8,8 @@ using namespace std;
 using namespace cst;
 
 // surchage d'operateur interne
-// comparaison
+// comparaison de deux vecteurs avec une tolérance de PRECISION 
+//pour éviter les problèmes liés aux erreurs d'arrondi des doubles 
 bool Vecteur3D::operator==(Vecteur3D const &autre) const {
   bool a = (abs(x_ - autre.x_) < PRECISION);
   bool b = (abs(y_ - autre.y_) < PRECISION);
@@ -16,11 +17,13 @@ bool Vecteur3D::operator==(Vecteur3D const &autre) const {
   return a and b and c;
 }
 
+// Deux vecteurs sont différents s'ils ne sont pas égaux
 bool Vecteur3D::operator!=(Vecteur3D const &autre) const {
   return !(*this == autre);
 }
 
 // modificateur
+// Addition composante par composante
 Vecteur3D &Vecteur3D::operator+=(
     Vecteur3D const &autre) { // la fonction modifie un objet existant, c'est
                               // pour ça qu'on retourne une référence
@@ -31,11 +34,13 @@ Vecteur3D &Vecteur3D::operator+=(
   return *this;
 }
 
+// La soustraction est réalisée en ajoutant l'opposé
 Vecteur3D &Vecteur3D::operator-=(Vecteur3D const &autre) {
   (*this) += -autre;
   return *this;
 }
 
+// Multiplication de chaque composante par un scalaire
 Vecteur3D &Vecteur3D::operator*=(double const lambda) {
   x_ *= lambda;
   y_ *= lambda;
@@ -44,11 +49,13 @@ Vecteur3D &Vecteur3D::operator*=(double const lambda) {
   return *this;
 }
 
+// Division par un scalaire
 Vecteur3D &Vecteur3D::operator/=(double const lambda) {
   (*this) *= (1 / lambda);
   return *this;
 }
 
+// Produit vectoriel
 Vecteur3D &Vecteur3D::operator^=(Vecteur3D const &autre) {
   double x = x_;
   double y = y_;
@@ -60,6 +67,7 @@ Vecteur3D &Vecteur3D::operator^=(Vecteur3D const &autre) {
   return *this;
 }
 
+// Produit scalaire de deux vecteurs
 double Vecteur3D::operator*(Vecteur3D const &autre)
     const { // surchage interne pour éviter l'utilisation de getters
   return x_ * autre.x_ + y_ * autre.y_ + z_ * autre.z_;
@@ -70,8 +78,11 @@ Vecteur3D Vecteur3D::operator~() const {
   return (norme() > PRECISION) ? (*this) / norme() : (Vecteur3D());
 }
 
+// Opposé du vecteur
 Vecteur3D Vecteur3D::operator-() const { return (*this) * -1; }
 
+
+// Affichage sous la forme (x y z)
 ostream &operator<<(ostream &out, Vecteur3D const &vec) {
   out << "(" << vec.get_x() << " " << vec.get_y() << " " << vec.get_z() << ")";
   return out;
@@ -105,6 +116,8 @@ Vecteur3D operator^(Vecteur3D vec1, Vecteur3D const &vec2) {
   return vec1 ^= vec2;
 }
 
+// Norme au carré
 double Vecteur3D::norme2() const { return (*this) * (*this); }
 
+// Norme euclidienne
 double Vecteur3D::norme() const { return sqrt(norme2()); }
