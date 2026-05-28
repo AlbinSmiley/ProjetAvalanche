@@ -60,6 +60,7 @@ public:
 
   void bouger(double dt = cst::DT);
 
+  // remet une force à 0
   void resetForce() { force_ = Vecteur3D(); };
 
   virtual void ajouteForce(Agent const &) = 0;

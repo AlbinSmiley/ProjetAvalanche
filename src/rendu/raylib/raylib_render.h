@@ -48,10 +48,10 @@ public:
 
   void dessine(Particule const &) override;
   void dessine(Systeme const &) override;
-  void dessine(Obstacle const &) override {}
+  void dessine(Obstacle const &) override { /*whatever it doesn't exist*/ }
   void dessine(Dalle const &) override;
   void dessine(Plan const &) override;
-  void dessine(Source const &) override {}
+  void dessine(Source const &) override { /*whatever it doesn't exist*/ }
 
   void dessinePanel(Systeme &);
   void fenetreParticule(Systeme &);

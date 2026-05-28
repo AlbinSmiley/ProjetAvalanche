@@ -73,11 +73,12 @@ public:
 
   // méthode d'évolution du système
   void evolue();
+
   // une méthode qui fait évoluer le système pendant un temps
   // donné en affichant le sysètme à chaques pas de temps
-  void evolution(double, std::ostream &out);
-  void dataEvolution(double);
-  void affichageEvolution(double, std::ostream &out);
+  void evolution(double, std::ostream &out); // CLI
+  void dataEvolution(
+      double); // dans des fichiers txt different pour chaque particules
 
   // méthodes nécéssaire à l'utilisation de rk4
   void rk4_On() { use_rk4 = true; }
