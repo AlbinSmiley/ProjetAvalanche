@@ -12,7 +12,6 @@ private:
   bool pointeur = false;
   bool lecture = false;
   bool rk4 = false;
-  bool affiche_vect = false;
 
   float vitesse_sim = 1.0f;
 

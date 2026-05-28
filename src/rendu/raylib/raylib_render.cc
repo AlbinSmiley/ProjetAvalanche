@@ -173,10 +173,6 @@ void RaylibRender::dessine(Particule const &part) {
 
   Color c = couleurParLeRayon(rayon);
 
-  // if (affiche_vect) {
-  //   DrawVector(part.get_position(), part.get_vitesse(), 0.5);
-  // }
-
   DrawSphere(pos, rayon, c);
 }
 
@@ -244,9 +240,6 @@ void RaylibRender::dessinePanel(Systeme &sys) {
   GuiToggle({15, 295, 170, 30}, rk4 ? "utiliser euler" : "utiliser rk4", &rk4);
   DrawText(TextFormat("Vitesse : %.1fx", vitesse_sim), 15, 328, 16, BLACK);
   GuiSlider({15, 347, 170, 20}, "0.1x", "5x", &vitesse_sim, 0.1f, 5.0f);
-  GuiToggle({15, 367, 170, 30},
-            affiche_vect ? "cacher les vitesses" : "afficher les vitesses",
-            &affiche_vect);
 }
 
 void RaylibRender::fenetreParticule(Systeme &sys) {
